@@ -1,0 +1,721 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/20/2016 4:14:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{AEA111A5-CA41-4D3F-93A8-90AC3E404336}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="PURCHASE_ORDER_RECONCILE"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{FA868037-C12A-4985-AB06-0759CECC8F96}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{982A656E-FF1E-4AD3-B512-E6DACB177765}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\MERCH_PROD table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="MERCH_PROD table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PURCHASE_ORDER_RECONCILE]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\MERCH_PROD table.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[PRODUCT_ID]"
+                      cachedDataType="i4"
+                      cachedName="PRODUCT_ID"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PRODUCT_ID]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PRODUCT_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[PO_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PO_NUMBER"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PO_NUMBER]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PO_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[PO_UPLOADED]"
+                      cachedDataType="i4"
+                      cachedName="PO_UPLOADED"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PO_UPLOADED]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PO_UPLOADED]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[RECEIVED]"
+                      cachedDataType="i4"
+                      cachedName="RECEIVED"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[RECEIVED]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[RECEIVED]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[QUALITY_CHECK]"
+                      cachedDataType="i4"
+                      cachedName="QUALITY_CHECK"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[QUALITY_CHECK]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[QUALITY_CHECK]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[PUTAWAY]"
+                      cachedDataType="i4"
+                      cachedName="PUTAWAY"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PUTAWAY]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PUTAWAY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[ADJUST_BY_LP]"
+                      cachedDataType="i4"
+                      cachedName="ADJUST_BY_LP"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[ADJUST_BY_LP]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[ADJUST_BY_LP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[DAMAGED]"
+                      cachedDataType="i4"
+                      cachedName="DAMAGED"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[DAMAGED]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[DAMAGED]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[QC_HOLD]"
+                      cachedDataType="i4"
+                      cachedName="QC_HOLD"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[QC_HOLD]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[QC_HOLD]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[RECEIPT_DT]"
+                      cachedDataType="dbDate"
+                      cachedName="RECEIPT_DT"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[RECEIPT_DT]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[RECEIPT_DT]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[PUTAWAY_DT]"
+                      cachedDataType="dbDate"
+                      cachedName="PUTAWAY_DT"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PUTAWAY_DT]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PUTAWAY_DT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[RECEIPT_DT]"
+                      dataType="dbDate"
+                      name="RECEIPT_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PUTAWAY_DT]"
+                      dataType="dbDate"
+                      name="PUTAWAY_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PRODUCT_ID]"
+                      dataType="i4"
+                      name="PRODUCT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PO_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      name="PO_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PO_UPLOADED]"
+                      dataType="i4"
+                      name="PO_UPLOADED" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[RECEIVED]"
+                      dataType="i4"
+                      name="RECEIVED" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[QUALITY_CHECK]"
+                      dataType="i4"
+                      name="QUALITY_CHECK" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[PUTAWAY]"
+                      dataType="i4"
+                      name="PUTAWAY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[ADJUST_BY_LP]"
+                      dataType="i4"
+                      name="ADJUST_BY_LP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[DAMAGED]"
+                      dataType="i4"
+                      name="DAMAGED" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[QC_HOLD]"
+                      dataType="i4"
+                      name="QC_HOLD" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\MERCH_PROD table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\STAGING table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STAGING table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select
+case when ISDATE (left(receipt_at_date,19))=1 then convert(date, receipt_at_date,120) else null end as RECEIPT_DT,
+case when ISDATE (left(put_away_at_date,19))=1 then convert(date, put_away_at_date,120) else null end as PUTAWAY_DT,
+case when ISNUMERIC(ops_product_id)=1 then convert(int, ops_product_id) else null end as PRODUCT_ID,
+convert(nvarchar(30), po_number) as PO_NUMBER,
+case when ISNUMERIC(PO_Uploaded)=1 then convert(int, PO_Uploaded) else null end as PO_UPLOADED,
+case when ISNUMERIC(Received)=1 then convert(int, Received) else null end as RECEIVED,
+case when ISNUMERIC(Quality_Check)=1 then convert(int, Quality_Check) else null end as QUALITY_CHECK,
+case when ISNUMERIC(Putaway)=1 then convert(int, Putaway) else null end as PUTAWAY,
+case when ISNUMERIC(Adjust_by_LP)=1 then convert(int, Adjust_by_LP) else null end as ADJUST_BY_LP,
+case when ISNUMERIC(Damaged)=1 then convert(int, Damaged) else null end as DAMAGED,
+case when ISNUMERIC(QC_Hold)=1 then convert(int, QC_Hold) else null end as QC_HOLD
+from STAGING.dbo.wms_purchase_order_reconcile
+where ISNUMERIC(ops_product_id)=1
+order by 3,4,1,2</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\STAGING table.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PRODUCT_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PRODUCT_ID]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PRODUCT_ID]"
+                      name="PRODUCT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PO_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PO_NUMBER]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PO_NUMBER]"
+                      name="PO_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PO_UPLOADED]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PO_UPLOADED]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PO_UPLOADED]"
+                      name="PO_UPLOADED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[RECEIVED]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[RECEIVED]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[RECEIVED]"
+                      name="RECEIVED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[QUALITY_CHECK]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[QUALITY_CHECK]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[QUALITY_CHECK]"
+                      name="QUALITY_CHECK"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PUTAWAY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PUTAWAY]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PUTAWAY]"
+                      name="PUTAWAY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[ADJUST_BY_LP]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ADJUST_BY_LP]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[ADJUST_BY_LP]"
+                      name="ADJUST_BY_LP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[DAMAGED]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[DAMAGED]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[DAMAGED]"
+                      name="DAMAGED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[QC_HOLD]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[QC_HOLD]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[QC_HOLD]"
+                      name="QC_HOLD"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[RECEIPT_DT]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[RECEIPT_DT]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[RECEIPT_DT]"
+                      name="RECEIPT_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PUTAWAY_DT]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PUTAWAY_DT]"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].Columns[PUTAWAY_DT]"
+                      name="PUTAWAY_DT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PRODUCT_ID]"
+                      dataType="i4"
+                      name="PRODUCT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PO_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      name="PO_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PO_UPLOADED]"
+                      dataType="i4"
+                      name="PO_UPLOADED" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[RECEIVED]"
+                      dataType="i4"
+                      name="RECEIVED" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[QUALITY_CHECK]"
+                      dataType="i4"
+                      name="QUALITY_CHECK" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PUTAWAY]"
+                      dataType="i4"
+                      name="PUTAWAY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ADJUST_BY_LP]"
+                      dataType="i4"
+                      name="ADJUST_BY_LP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[DAMAGED]"
+                      dataType="i4"
+                      name="DAMAGED" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[QC_HOLD]"
+                      dataType="i4"
+                      name="QC_HOLD" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[RECEIPT_DT]"
+                      dataType="dbDate"
+                      name="RECEIPT_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[PUTAWAY_DT]"
+                      dataType="dbDate"
+                      name="PUTAWAY_DT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[RECEIPT_DT]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[RECEIPT_DT]"
+                      name="RECEIPT_DT" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PUTAWAY_DT]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PUTAWAY_DT]"
+                      name="PUTAWAY_DT" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PRODUCT_ID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PRODUCT_ID]"
+                      name="PRODUCT_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PO_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PO_NUMBER]"
+                      name="PO_NUMBER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PO_UPLOADED]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PO_UPLOADED]"
+                      name="PO_UPLOADED" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[RECEIVED]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[RECEIVED]"
+                      name="RECEIVED" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[QUALITY_CHECK]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[QUALITY_CHECK]"
+                      name="QUALITY_CHECK" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PUTAWAY]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[PUTAWAY]"
+                      name="PUTAWAY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[ADJUST_BY_LP]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[ADJUST_BY_LP]"
+                      name="ADJUST_BY_LP" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[DAMAGED]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[DAMAGED]"
+                      name="DAMAGED" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[QC_HOLD]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[QC_HOLD]"
+                      name="QC_HOLD" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\MERCH_PROD table.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\STAGING table.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate MERCH_PROD table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5D38B600-03CB-4531-B46F-A487427161B9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate MERCH_PROD table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:SqlStatementSource="truncate table dbo.PURCHASE_ORDER_RECONCILE" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6CA26279-8988-4D68-9E01-D230376E27FB}"
+      DTS:From="Package\Truncate MERCH_PROD table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Data Flow Task"
+          TopLeft="222.285718071218,135.811766610591" />
+        <NodeLayout
+          Size="217.6,41.6"
+          Id="Package\Truncate MERCH_PROD table"
+          TopLeft="79.4285727812319,39.1529417255758" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="188.228572781232,80.7529417255758">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="109.257145289986,55.0588248850153"
+              Start="0,0"
+              End="109.257145289986,47.5588248850153">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5294124425076" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5294124425076"
+                    Point2="0,27.5294124425076"
+                    Point3="4,27.5294124425076" />
+                  <mssgle:LineSegment
+                    End="105.257145289986,27.5294124425076" />
+                  <mssgle:CubicBezierSegment
+                    Point1="105.257145289986,27.5294124425076"
+                    Point2="109.257145289986,27.5294124425076"
+                    Point3="109.257145289986,31.5294124425076" />
+                  <mssgle:LineSegment
+                    End="109.257145289986,47.5588248850153" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="148.8,41.6"
+          Id="Package\Data Flow Task\STAGING table"
+          TopLeft="88.571430079791,35.4823534388031" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Data Flow Task\MERCH_PROD table"
+          TopLeft="246.285718479935,135.200001896129" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="162.971430079791,77.0823534388031">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="169.714288400144,58.1176484573259"
+              Start="0,0"
+              End="169.714288400144,50.6176484573259">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.0588242286629" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.0588242286629"
+                    Point2="0,29.0588242286629"
+                    Point3="4,29.0588242286629" />
+                  <mssgle:LineSegment
+                    End="165.714288400144,29.0588242286629" />
+                  <mssgle:CubicBezierSegment
+                    Point1="165.714288400144,29.0588242286629"
+                    Point2="169.714288400144,29.0588242286629"
+                    Point3="169.714288400144,33.0588242286629" />
+                  <mssgle:LineSegment
+                    End="169.714288400144,50.6176484573259" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\MERCH_PROD table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\STAGING table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

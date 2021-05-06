@@ -1,0 +1,1438 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/3/2018 3:17:11 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{6ED134BD-F9F2-4F64-8405-EDF2B992A5D2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="order_day_pid_amount_unit"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{E04C0AE7-3A47-44D5-8536-48CFA4858172}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\TRUNCATE Finance PID table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2772479D-FD23-43A9-889A-3E51FFD8CCEE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="TRUNCATE Finance PID table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DE3A53C-A772-492B-A882-E720BC31034C}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE finance.dbo.order_pid_day_amount_unit" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update FINANCE pid table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2943D647-CA81-442D-96ED-9DBEC49DD563}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update FINANCE pid table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="28900"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Update FINANCE pid table\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[order_pid_day_amount_unit]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,ORDER([greg_date] ASC,[order_id] ASC,[product_id] ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update FINANCE pid table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{9DE3A53C-A772-492B-A882-E720BC31034C}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[FINANCE]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[greg_date]"
+                      cachedDataType="dbDate"
+                      cachedName="greg_date"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[greg_date]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[greg_date]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_id]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="order_id"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[order_id]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[product_id]"
+                      cachedDataType="i4"
+                      cachedName="product_id"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[product_id]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ord_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cxl_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[rtn_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[net_revenue_amt]"
+                      cachedDataType="numeric"
+                      cachedName="net_revenue_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[net_revenue_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[net_revenue_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ord_initial_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_initial_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_initial_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_initial_price_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ord_base_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_base_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_base_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_base_price_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ord_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_coupon_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_coupon_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ord_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_reward_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_reward_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_reward_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cxl_initial_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_initial_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_initial_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_initial_price_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cxl_base_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_base_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_base_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_base_price_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cxl_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_coupon_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_coupon_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cxl_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_reward_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_reward_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_reward_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[rtn_initial_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_initial_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_initial_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_initial_price_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[rtn_base_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_base_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_base_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_base_price_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[rtn_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_coupon_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_coupon_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[rtn_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_reward_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_reward_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_reward_amt]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ord_units]"
+                      cachedDataType="i4"
+                      cachedName="ord_units"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_units]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[cxl_units]"
+                      cachedDataType="i4"
+                      cachedName="cxl_units"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_units]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[rtn_units]"
+                      cachedDataType="i4"
+                      cachedName="rtn_units"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_units]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[net_units]"
+                      cachedDataType="i4"
+                      cachedName="net_units"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[net_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[net_units]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_created_date]"
+                      cachedDataType="dbDate"
+                      cachedName="order_created_date"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_created_date]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[order_created_date]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[medium]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="medium"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[medium]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[medium]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[source]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="source"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[source]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[default_channel_grouping]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="default_channel_grouping"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[default_channel_grouping]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[default_channel_grouping]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[date_channel_medium_source]"
+                      cachedDataType="wstr"
+                      cachedLength="308"
+                      cachedName="date_channel_medium_source"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[date_channel_medium_source]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[date_channel_medium_source]" />
+                    <inputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[channel_medium_source]"
+                      cachedDataType="wstr"
+                      cachedLength="300"
+                      cachedName="channel_medium_source"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[channel_medium_source]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[channel_medium_source]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[greg_date]"
+                      dataType="dbDate"
+                      name="greg_date" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_amt]"
+                      dataType="numeric"
+                      name="ord_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_amt]"
+                      dataType="numeric"
+                      name="cxl_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_amt]"
+                      dataType="numeric"
+                      name="rtn_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[net_revenue_amt]"
+                      dataType="numeric"
+                      name="net_revenue_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_initial_price_amt]"
+                      dataType="numeric"
+                      name="ord_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_base_price_amt]"
+                      dataType="numeric"
+                      name="ord_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_coupon_amt]"
+                      dataType="numeric"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_reward_amt]"
+                      dataType="numeric"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_initial_price_amt]"
+                      dataType="numeric"
+                      name="cxl_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_base_price_amt]"
+                      dataType="numeric"
+                      name="cxl_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_reward_amt]"
+                      dataType="numeric"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_base_price_amt]"
+                      dataType="numeric"
+                      name="rtn_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_reward_amt]"
+                      dataType="numeric"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_units]"
+                      dataType="i4"
+                      name="ord_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_units]"
+                      dataType="i4"
+                      name="cxl_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_units]"
+                      dataType="i4"
+                      name="rtn_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[net_units]"
+                      dataType="i4"
+                      name="net_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_created_date]"
+                      dataType="dbDate"
+                      name="order_created_date" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[medium]"
+                      dataType="wstr"
+                      length="100"
+                      name="medium" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="100"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[default_channel_grouping]"
+                      dataType="wstr"
+                      length="100"
+                      name="default_channel_grouping" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[date_channel_medium_source]"
+                      dataType="wstr"
+                      length="308"
+                      name="date_channel_medium_source" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[channel_medium_source]"
+                      dataType="wstr"
+                      length="300"
+                      name="channel_medium_source" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update FINANCE pid table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update FINANCE pid table\STAGING pid table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STAGING pid table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+CONVERT(DATE, opdaur.[greg_date],120)  AS [greg_date],
+CONVERT(NVARCHAR(50),opdaur.[order_id]) AS order_id,
+CONVERT(INT,opdaur.[product_id]) AS product_id,
+CONVERT(NUMERIC(19,7), opdaur.[ord_amt])  AS ord_amt,
+CONVERT(NUMERIC(19,7), opdaur.[cxl_amt])  AS cxl_amt,
+CONVERT(NUMERIC(19,7), opdaur.[rtn_amt])  AS rtn_amt,
+CONVERT(NUMERIC(19,7), opdaur.[net_revenue_amt])  AS net_revenue_amt,
+CONVERT(NUMERIC(19,7), opdaur.[ord_initial_price_amt])  AS ord_initial_price_amt,
+CONVERT(NUMERIC(19,7), opdaur.[ord_base_price_amt])  AS ord_base_price_amt,
+CONVERT(NUMERIC(19,7), opdaur.[ord_coupon_amt])  AS ord_coupon_amt,
+CONVERT(NUMERIC(19,7), opdaur.[ord_reward_amt])  AS ord_reward_amt,
+CONVERT(NUMERIC(19,7), opdaur.[cxl_initial_price_amt])  AS cxl_initial_price_amt,
+CONVERT(NUMERIC(19,7), opdaur.[cxl_base_price_amt])  AS cxl_base_price_amt,
+CONVERT(NUMERIC(19,7), opdaur.[cxl_coupon_amt])  AS cxl_coupon_amt,
+CONVERT(NUMERIC(19,7), opdaur.[cxl_reward_amt])  AS cxl_reward_amt,
+CONVERT(NUMERIC(19,7), opdaur.[rtn_initial_price_amt])  AS rtn_initial_price_amt,
+CONVERT(NUMERIC(19,7), opdaur.[rtn_base_price_amt])  AS rtn_base_price_amt,
+CONVERT(NUMERIC(19,7), opdaur.[rtn_coupon_amt])  AS rtn_coupon_amt,
+CONVERT(NUMERIC(19,7), opdaur.[rtn_reward_amt])  AS rtn_reward_amt,
+CONVERT(INT, opdaur.[ord_units]) AS ord_units,
+CONVERT(INT, opdaur.[cxl_units]) AS cxl_units,
+CONVERT(INT, opdaur.[rtn_units]) AS rtn_units,
+CONVERT(INT, opdaur.[net_units]) AS net_units,
+CASE WHEN ISDATE (LEFT(opdaur.[order_created_date],19))=1 THEN CONVERT(DATE, opdaur.[order_created_date],120) ELSE NULL END AS [order_created_date],
+COALESCE(gots.[default_channel_grouping],'na') AS [default_channel_grouping],
+COALESCE(gots.[medium],'na') AS [medium],
+COALESCE(gots.[source],'na') AS [source],
+CONCAT(LOWER(LTRIM(RTRIM(COALESCE(gots.[default_channel_grouping],'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.[medium],'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.[source],'na'))))) AS channel_medium_source,
+CONCAT(CONVERT(NVARCHAR(8),CAST(opdaur.greg_date AS DATE),112),LOWER(LTRIM(RTRIM(COALESCE(gots.[default_channel_grouping],'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.[medium],'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.[source],'na'))))) AS date_channel_medium_source
+FROM staging.dbo.order_pid_day_amount_unit_raw AS opdaur
+LEFT OUTER JOIN finance.dbo.ga_order_traffic_source AS gots ON opdaur.greg_date = gots.greg_date
+    AND opdaur.order_id = gots.order_id
+ORDER BY CONVERT(DATE, opdaur.[greg_date],120),CONVERT(NVARCHAR(50),opdaur.[order_id]),CONVERT(INT,opdaur.[product_id])</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update FINANCE pid table\STAGING pid table.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[greg_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[greg_date]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[greg_date]"
+                      name="greg_date"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[order_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      length="50"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[order_id]"
+                      name="order_id"
+                      sortKeyPosition="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[product_id]"
+                      name="product_id"
+                      sortKeyPosition="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_amt]"
+                      name="ord_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_amt]"
+                      name="cxl_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_amt]"
+                      name="rtn_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[net_revenue_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[net_revenue_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[net_revenue_amt]"
+                      name="net_revenue_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_initial_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_initial_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_initial_price_amt]"
+                      name="ord_initial_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_base_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_base_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_base_price_amt]"
+                      name="ord_base_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_coupon_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_coupon_amt]"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_reward_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_reward_amt]"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_initial_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_initial_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_initial_price_amt]"
+                      name="cxl_initial_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_base_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_base_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_base_price_amt]"
+                      name="cxl_base_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_coupon_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_coupon_amt]"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_reward_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_reward_amt]"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_initial_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_initial_price_amt]"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_base_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_base_price_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_base_price_amt]"
+                      name="rtn_base_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_coupon_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_coupon_amt]"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_reward_amt]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_reward_amt]"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_units]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[ord_units]"
+                      name="ord_units"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_units]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[cxl_units]"
+                      name="cxl_units"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_units]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[rtn_units]"
+                      name="rtn_units"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[net_units]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[net_units]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[net_units]"
+                      name="net_units"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[order_created_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[order_created_date]"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[order_created_date]"
+                      name="order_created_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[medium]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[medium]"
+                      length="100"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[medium]"
+                      name="medium"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      length="100"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[source]"
+                      name="source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[default_channel_grouping]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[default_channel_grouping]"
+                      length="100"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[default_channel_grouping]"
+                      name="default_channel_grouping"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[date_channel_medium_source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[date_channel_medium_source]"
+                      length="308"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[date_channel_medium_source]"
+                      name="date_channel_medium_source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[channel_medium_source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[channel_medium_source]"
+                      length="300"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].Columns[channel_medium_source]"
+                      name="channel_medium_source"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[greg_date]"
+                      dataType="dbDate"
+                      name="greg_date" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_amt]"
+                      dataType="numeric"
+                      name="ord_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_amt]"
+                      dataType="numeric"
+                      name="cxl_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_amt]"
+                      dataType="numeric"
+                      name="rtn_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[net_revenue_amt]"
+                      dataType="numeric"
+                      name="net_revenue_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_initial_price_amt]"
+                      dataType="numeric"
+                      name="ord_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_base_price_amt]"
+                      dataType="numeric"
+                      name="ord_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_coupon_amt]"
+                      dataType="numeric"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_reward_amt]"
+                      dataType="numeric"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_initial_price_amt]"
+                      dataType="numeric"
+                      name="cxl_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_base_price_amt]"
+                      dataType="numeric"
+                      name="cxl_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_reward_amt]"
+                      dataType="numeric"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_base_price_amt]"
+                      dataType="numeric"
+                      name="rtn_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_reward_amt]"
+                      dataType="numeric"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[ord_units]"
+                      dataType="i4"
+                      name="ord_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[cxl_units]"
+                      dataType="i4"
+                      name="cxl_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[rtn_units]"
+                      dataType="i4"
+                      name="rtn_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[net_units]"
+                      dataType="i4"
+                      name="net_units" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[order_created_date]"
+                      dataType="dbDate"
+                      name="order_created_date" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[medium]"
+                      dataType="wstr"
+                      length="100"
+                      name="medium" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="100"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[default_channel_grouping]"
+                      dataType="wstr"
+                      length="100"
+                      name="default_channel_grouping" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[date_channel_medium_source]"
+                      dataType="wstr"
+                      length="308"
+                      name="date_channel_medium_source" />
+                    <externalMetadataColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output].ExternalColumns[channel_medium_source]"
+                      dataType="wstr"
+                      length="300"
+                      name="channel_medium_source" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[greg_date]"
+                      dataType="dbDate"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[greg_date]"
+                      name="greg_date" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      name="order_id" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      name="product_id" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_amt]"
+                      name="ord_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_amt]"
+                      name="cxl_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_amt]"
+                      name="rtn_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[net_revenue_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[net_revenue_amt]"
+                      name="net_revenue_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_initial_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_initial_price_amt]"
+                      name="ord_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_base_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_base_price_amt]"
+                      name="ord_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_coupon_amt]"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_reward_amt]"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_initial_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_initial_price_amt]"
+                      name="cxl_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_base_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_base_price_amt]"
+                      name="cxl_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_coupon_amt]"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_reward_amt]"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_initial_price_amt]"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_base_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_base_price_amt]"
+                      name="rtn_base_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_coupon_amt]"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_reward_amt]"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_units]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ord_units]"
+                      name="ord_units" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_units]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[cxl_units]"
+                      name="cxl_units" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_units]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[rtn_units]"
+                      name="rtn_units" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[net_units]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[net_units]"
+                      name="net_units" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[order_created_date]"
+                      dataType="dbDate"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[order_created_date]"
+                      name="order_created_date" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[default_channel_grouping]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[default_channel_grouping]"
+                      name="default_channel_grouping" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[medium]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[medium]"
+                      name="medium" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[source]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[source]"
+                      name="source" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[channel_medium_source]"
+                      dataType="wstr"
+                      length="300"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[channel_medium_source]"
+                      name="channel_medium_source" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[date_channel_medium_source]"
+                      dataType="wstr"
+                      length="308"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[date_channel_medium_source]"
+                      name="date_channel_medium_source" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update FINANCE pid table.Paths[OLE DB Source Output]"
+              endId="Package\Update FINANCE pid table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Update FINANCE pid table\STAGING pid table.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{34E1B87F-4B2B-4EC6-935B-1D950B101FBD}"
+      DTS:From="Package\TRUNCATE Finance PID table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update FINANCE pid table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="218,42"
+          Id="Package\TRUNCATE Finance PID table"
+          TopLeft="108.571430420389,127.247060608121" />
+        <NodeLayout
+          Size="202,42"
+          Id="Package\Update FINANCE pid table"
+          TopLeft="376.000006403242,154.776472758917" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="326.171430420389,148.047060608121">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.8285759828529,27.5294121507955"
+              Start="0,0"
+              End="42.3285759828529,27.5294121507955">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="20.9142879914264,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20.9142879914264,0"
+                    Point2="24.9142879914264,0"
+                    Point3="24.9142879914264,4" />
+                  <mssgle:LineSegment
+                    End="24.9142879914264,23.5294121507955" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.9142879914264,23.5294121507955"
+                    Point2="24.9142879914264,27.5294121507955"
+                    Point3="28.9142879914264,27.5294121507955" />
+                  <mssgle:LineSegment
+                    End="42.3285759828529,27.5294121507955" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update FINANCE pid table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Update FINANCE pid table\STAGING pid table"
+          TopLeft="138.4,42.4" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Update FINANCE pid table\OLE DB Destination"
+          TopLeft="363.2,68.8" />
+        <EdgeLayout
+          Id="Package\Update FINANCE pid table.Paths[OLE DB Source Output]"
+          TopLeft="304.8,63.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="58.4,26.4"
+              Start="0,0"
+              End="50.9,26.4">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="25.2,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.2,0"
+                    Point2="29.2,0"
+                    Point3="29.2,4" />
+                  <mssgle:LineSegment
+                    End="29.2,22.4" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29.2,22.4"
+                    Point2="29.2,26.4"
+                    Point3="33.2,26.4" />
+                  <mssgle:LineSegment
+                    End="50.9,26.4" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update FINANCE pid table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update FINANCE pid table\STAGING pid table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

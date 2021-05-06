@@ -1,0 +1,885 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/4/2017 8:50:22 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{BFE0E516-EF89-4D2B-943F-CBE3BA42FAA4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="fact_receiving_items"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{E6411187-8431-44A2-9923-BFA0CA38A872}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clear Existing MERCH_PROD data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C4824E24-0B62-4401-B157-E0310695C254}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear Existing MERCH_PROD data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE merch_prod.dbo.fact_receiving_items" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import to MERCH_PROD"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{309D7505-BE4E-43B8-A642-8A9ABF7AB209}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import to MERCH_PROD"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="MERCH_PROD fact_receiving_items"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[fact_receiving_items]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[receiving_id]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="receiving_id"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[receiving_id]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receiving_id]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[receiving_type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="receiving_type"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[receiving_type]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receiving_type]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[buy_type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="buy_type"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[buy_type]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[buy_type]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[po_type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="po_type"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[po_type]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[po_type]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[channel_type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="channel_type"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[channel_type]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[channel_type]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[upload_date]"
+                      cachedDataType="dbDate"
+                      cachedName="upload_date"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[upload_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[upload_date]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[receipt_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="receipt_date"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[receipt_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receipt_date]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[put_away_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="put_away_date"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[put_away_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[put_away_date]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[delivery_date]"
+                      cachedDataType="dbDate"
+                      cachedName="delivery_date"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[delivery_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[delivery_date]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[qty_uploaded]"
+                      cachedDataType="i4"
+                      cachedName="qty_uploaded"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_uploaded]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_uploaded]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[qty_quality_checked]"
+                      cachedDataType="i4"
+                      cachedName="qty_quality_checked"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_quality_checked]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_quality_checked]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[qty_damaged]"
+                      cachedDataType="i4"
+                      cachedName="qty_damaged"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_damaged]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_damaged]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[qty_put_away]"
+                      cachedDataType="i4"
+                      cachedName="qty_put_away"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_put_away]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_put_away]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[dw_created_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dw_created_at"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[dw_created_at]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[dw_created_at]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[qty_received]"
+                      cachedDataType="i4"
+                      cachedName="qty_received"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_received]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_received]" />
+                    <inputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].Columns[ops_product_id]"
+                      cachedDataType="i4"
+                      cachedName="ops_product_id"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[ops_product_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[receiving_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="receiving_id" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[receiving_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="receiving_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[buy_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="buy_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[po_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="po_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[channel_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="channel_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[upload_date]"
+                      dataType="dbDate"
+                      name="upload_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[receipt_date]"
+                      dataType="dbTimeStamp"
+                      name="receipt_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[put_away_date]"
+                      dataType="dbTimeStamp"
+                      name="put_away_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[delivery_date]"
+                      dataType="dbDate"
+                      name="delivery_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_uploaded]"
+                      dataType="i4"
+                      name="qty_uploaded" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_received]"
+                      dataType="i4"
+                      name="qty_received" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_quality_checked]"
+                      dataType="i4"
+                      name="qty_quality_checked" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_damaged]"
+                      dataType="i4"
+                      name="qty_damaged" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[qty_put_away]"
+                      dataType="i4"
+                      name="qty_put_away" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input].ExternalColumns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      name="dw_created_at" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STAGING fact_receiving_items_raw"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+CONVERT(NVARCHAR(50), receiving_id) AS receiving_id,
+CONVERT(NVARCHAR(50), receiving_type) AS receiving_type,
+CONVERT(NVARCHAR(50), buy_type) AS buy_type,
+CONVERT(NVARCHAR(50), po_type) AS po_type,
+CONVERT(NVARCHAR(50), channel_type) AS channel_type,
+CASE WHEN ISDATE (LEFT(upload_date,19))=1 THEN CAST(LEFT(upload_date,19) AS DATE) ELSE NULL END AS upload_date,
+CASE WHEN ISDATE (LEFT(receipt_date,19))=1 THEN CAST(LEFT(receipt_date,19) AS DATETIME) ELSE NULL END AS receipt_date,
+CASE WHEN ISDATE (LEFT(put_away_date,19))=1 THEN CAST(LEFT(put_away_date,19) AS DATETIME) ELSE NULL END AS put_away_date,
+CASE WHEN ISDATE (LEFT(delivery_date,19))=1 THEN CAST(LEFT(delivery_date,19) AS DATE) ELSE NULL END AS delivery_date,
+CASE WHEN ISNUMERIC(ops_product_id)=1 THEN CONVERT(INT, ops_product_id) ELSE NULL END AS ops_product_id,
+CASE WHEN ISNUMERIC(qty_uploaded)=1 THEN CONVERT(INT, qty_uploaded) ELSE NULL END AS qty_uploaded,
+CASE WHEN ISNUMERIC(qty_received)=1 THEN CONVERT(INT, qty_received) ELSE NULL END AS qty_received,
+CASE WHEN ISNUMERIC(qty_quality_checked)=1 THEN CONVERT(INT, qty_quality_checked) ELSE NULL END AS qty_quality_checked,
+CASE WHEN ISNUMERIC(qty_damaged)=1 THEN CONVERT(INT, qty_damaged) ELSE NULL END AS qty_damaged,
+CASE WHEN ISNUMERIC(qty_put_away)=1 THEN CONVERT(INT, qty_put_away) ELSE NULL END AS qty_put_away,
+CASE WHEN ISDATE (LEFT(dw_created_at,19))=1 THEN CONVERT(DATETIME,LEFT(dw_created_at,19),120) ELSE NULL END AS dw_created_at
+FROM staging.dbo.fact_receiving_items_raw
+ORDER BY receiving_id,CONVERT(INT, ops_product_id)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receiving_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[receiving_id]"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receiving_id]"
+                      name="receiving_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receiving_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[receiving_type]"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receiving_type]"
+                      name="receiving_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[buy_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[buy_type]"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[buy_type]"
+                      name="buy_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[po_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[po_type]"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[po_type]"
+                      name="po_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[channel_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[channel_type]"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[channel_type]"
+                      name="channel_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[upload_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[upload_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[upload_date]"
+                      name="upload_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receipt_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[receipt_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[receipt_date]"
+                      name="receipt_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[put_away_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[put_away_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[put_away_date]"
+                      name="put_away_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[delivery_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[delivery_date]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[delivery_date]"
+                      name="delivery_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[ops_product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[ops_product_id]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[ops_product_id]"
+                      name="ops_product_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_uploaded]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_uploaded]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_uploaded]"
+                      name="qty_uploaded"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_quality_checked]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_quality_checked]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_quality_checked]"
+                      name="qty_quality_checked"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_damaged]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_damaged]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_damaged]"
+                      name="qty_damaged"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_put_away]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_put_away]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_put_away]"
+                      name="qty_put_away"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[dw_created_at]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[dw_created_at]"
+                      name="dw_created_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_received]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_received]"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].Columns[qty_received]"
+                      name="qty_received"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[receiving_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="receiving_id" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[receiving_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="receiving_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[buy_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="buy_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[po_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="po_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[channel_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="channel_type" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[upload_date]"
+                      dataType="dbDate"
+                      name="upload_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[receipt_date]"
+                      dataType="dbTimeStamp"
+                      name="receipt_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[put_away_date]"
+                      dataType="dbTimeStamp"
+                      name="put_away_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[delivery_date]"
+                      dataType="dbDate"
+                      name="delivery_date" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[ops_product_id]"
+                      dataType="i4"
+                      name="ops_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_uploaded]"
+                      dataType="i4"
+                      name="qty_uploaded" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_quality_checked]"
+                      dataType="i4"
+                      name="qty_quality_checked" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_damaged]"
+                      dataType="i4"
+                      name="qty_damaged" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_put_away]"
+                      dataType="i4"
+                      name="qty_put_away" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      name="dw_created_at" />
+                    <externalMetadataColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output].ExternalColumns[qty_received]"
+                      dataType="i4"
+                      name="qty_received" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[receiving_id]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[receiving_id]"
+                      name="receiving_id" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[receiving_type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[receiving_type]"
+                      name="receiving_type" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[buy_type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[buy_type]"
+                      name="buy_type" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[po_type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[po_type]"
+                      name="po_type" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[channel_type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[channel_type]"
+                      name="channel_type" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[upload_date]"
+                      dataType="dbDate"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[upload_date]"
+                      name="upload_date" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[receipt_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[receipt_date]"
+                      name="receipt_date" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[put_away_date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[put_away_date]"
+                      name="put_away_date" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[delivery_date]"
+                      dataType="dbDate"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[delivery_date]"
+                      name="delivery_date" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[ops_product_id]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[ops_product_id]"
+                      name="ops_product_id" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_uploaded]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_uploaded]"
+                      name="qty_uploaded" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_received]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_received]"
+                      name="qty_received" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_quality_checked]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_quality_checked]"
+                      name="qty_quality_checked" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_damaged]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_damaged]"
+                      name="qty_damaged" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_put_away]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[qty_put_away]"
+                      name="qty_put_away" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[dw_created_at]"
+                      name="dw_created_at" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import to MERCH_PROD.Paths[OLE DB Source Output]"
+              endId="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{19B2A0BE-99B9-4536-8C06-BCB22080BA21}"
+      DTS:From="Package\Clear Existing MERCH_PROD data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import to MERCH_PROD" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="236.8,41.6"
+          Id="Package\Clear Existing MERCH_PROD data"
+          TopLeft="40.000000681196,45.270588870197" />
+        <NodeLayout
+          Size="195.2,41.6"
+          Id="Package\Import to MERCH_PROD"
+          TopLeft="184.571431714661,126.023531179197" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="158.400000681196,86.870588870197">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="123.771431033465,39.152942309"
+              Start="0,0"
+              End="123.771431033465,31.652942309">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5764711545" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5764711545"
+                    Point2="0,19.5764711545"
+                    Point3="4,19.5764711545" />
+                  <mssgle:LineSegment
+                    End="119.771431033465,19.5764711545" />
+                  <mssgle:CubicBezierSegment
+                    Point1="119.771431033465,19.5764711545"
+                    Point2="123.771431033465,19.5764711545"
+                    Point3="123.771431033465,23.5764711545" />
+                  <mssgle:LineSegment
+                    End="123.771431033465,31.652942309" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Import to MERCH_PROD">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="246.4,41.6"
+          Id="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw"
+          TopLeft="64.0000010899135,54.4470595871289" />
+        <NodeLayout
+          Size="246.4,41.6"
+          Id="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items"
+          TopLeft="226.642860908898,148.041178469674" />
+        <EdgeLayout
+          Id="Package\Import to MERCH_PROD.Paths[OLE DB Source Output]"
+          TopLeft="187.200001089914,96.0470595871289">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="162.642859818984,51.9941188825456"
+              Start="0,0"
+              End="162.642859818984,44.4941188825456">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.9970594412728" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.9970594412728"
+                    Point2="0,25.9970594412728"
+                    Point3="4,25.9970594412728" />
+                  <mssgle:LineSegment
+                    End="158.642859818984,25.9970594412728" />
+                  <mssgle:CubicBezierSegment
+                    Point1="158.642859818984,25.9970594412728"
+                    Point2="162.642859818984,25.9970594412728"
+                    Point3="162.642859818984,29.9970594412728" />
+                  <mssgle:LineSegment
+                    End="162.642859818984,44.4941188825456" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import to MERCH_PROD\MERCH_PROD fact_receiving_items">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import to MERCH_PROD\STAGING fact_receiving_items_raw">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

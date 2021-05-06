@@ -1,0 +1,1236 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/27/2018 4:48:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{15EF5DFE-B457-4C58-92CD-48D201B885D3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="products_hist_2"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{A519A8F4-F18A-491C-BB08-E4DF98EDD190}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{AAFA1060-93BF-4AFC-A8D5-4251A332EBBB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="46500"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\MERCH_PROD Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="MERCH_PROD Destination"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[products_hist_2]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,ORDER(PRODUCT_ID ASC,DW_BATCH_ID ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\MERCH_PROD Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[product_id]"
+                      cachedDataType="i4"
+                      cachedName="product_id"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[product_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[meta_title]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="meta_title"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[meta_title]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[meta_title]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[url_key]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="url_key"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[url_key]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[url_key]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[url_path]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="url_path"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[url_path]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[url_path]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[base_image]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="base_image"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[base_image]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[base_image]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[small_image]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="small_image"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[small_image]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[small_image]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[thumbnail]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="thumbnail"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[thumbnail]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[thumbnail]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[model_image]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="model_image"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[model_image]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[model_image]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[close_up_detail]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="close_up_detail"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[close_up_detail]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[close_up_detail]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[ring_front_image]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="ring_front_image"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[ring_front_image]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[ring_front_image]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[ring_back_image]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="ring_back_image"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[ring_back_image]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[ring_back_image]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[special_instruction]"
+                      cachedDataType="wstr"
+                      cachedLength="1530"
+                      cachedName="special_instruction"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[special_instruction]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[special_instruction]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[product_branding]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="product_branding"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_branding]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[product_branding]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[hst_code]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="hst_code"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[hst_code]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[hst_code]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[country_of_manufacture]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="country_of_manufacture"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[country_of_manufacture]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[country_of_manufacture]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[external_sku]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="external_sku"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[external_sku]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[external_sku]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[duties_percentage]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="duties_percentage"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[duties_percentage]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[duties_percentage]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[wholesale_fob_cost]"
+                      cachedDataType="numeric"
+                      cachedName="wholesale_fob_cost"
+                      cachedPrecision="9"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[wholesale_fob_cost]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[wholesale_fob_cost]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[wholesale_ldp_cost]"
+                      cachedDataType="numeric"
+                      cachedName="wholesale_ldp_cost"
+                      cachedPrecision="9"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[wholesale_ldp_cost]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[wholesale_ldp_cost]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[dw_source]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="dw_source"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_source]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_source]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[dw_batch_id]"
+                      cachedDataType="i4"
+                      cachedName="dw_batch_id"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_batch_id]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_batch_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[dw_created_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dw_created_at"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_created_at]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_created_at]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[dw_updated_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dw_updated_at"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_updated_at]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_updated_at]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[from_time]"
+                      cachedDataType="dbDate"
+                      cachedName="from_time"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_dt]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[from_time]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].Columns[to_time]"
+                      cachedDataType="dbDate"
+                      cachedName="to_time"
+                      externalMetadataColumnId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[end_dt]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[to_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[meta_title]"
+                      dataType="wstr"
+                      length="1530"
+                      name="meta_title" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[url_key]"
+                      dataType="wstr"
+                      length="1530"
+                      name="url_key" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[url_path]"
+                      dataType="wstr"
+                      length="1530"
+                      name="url_path" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[base_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="base_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[small_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="small_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[thumbnail]"
+                      dataType="wstr"
+                      length="1530"
+                      name="thumbnail" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[model_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="model_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[close_up_detail]"
+                      dataType="wstr"
+                      length="1530"
+                      name="close_up_detail" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[ring_front_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="ring_front_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[ring_back_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="ring_back_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[special_instruction]"
+                      dataType="wstr"
+                      length="1530"
+                      name="special_instruction" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_branding]"
+                      dataType="wstr"
+                      length="200"
+                      name="product_branding" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[hst_code]"
+                      dataType="wstr"
+                      length="200"
+                      name="hst_code" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[country_of_manufacture]"
+                      dataType="wstr"
+                      length="200"
+                      name="country_of_manufacture" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[external_sku]"
+                      dataType="wstr"
+                      length="200"
+                      name="external_sku" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[duties_percentage]"
+                      dataType="wstr"
+                      length="10"
+                      name="duties_percentage" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[wholesale_fob_cost]"
+                      dataType="numeric"
+                      name="wholesale_fob_cost"
+                      precision="9"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[wholesale_ldp_cost]"
+                      dataType="numeric"
+                      name="wholesale_ldp_cost"
+                      precision="9"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_source]"
+                      dataType="wstr"
+                      length="20"
+                      name="dw_source" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_dt]"
+                      dataType="dbDate"
+                      name="start_dt" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[end_dt]"
+                      dataType="dbDate"
+                      name="end_dt" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_batch_id]"
+                      dataType="i4"
+                      name="dw_batch_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      name="dw_created_at" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input].ExternalColumns[dw_updated_at]"
+                      dataType="dbTimeStamp"
+                      name="dw_updated_at" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\MERCH_PROD Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\MERCH_PROD Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\MERCH_PROD Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\MERCH_PROD Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\STAGING Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STAGING Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+CONVERT(INT, [ops_product_id]) AS product_id,
+CONVERT(NVARCHAR(1530),[meta_title]) AS meta_title,
+CONVERT(NVARCHAR(1530),[url_key]) AS url_key,
+CONVERT(NVARCHAR(1530),[url_path]) AS url_path,
+CONVERT(NVARCHAR(1530),[base_image]) AS base_image,
+CONVERT(NVARCHAR(1530),[small_image]) AS small_image,
+CONVERT(NVARCHAR(1530),[thumbnail]) AS thumbnail,
+CONVERT(NVARCHAR(1530),[model_image]) AS model_image,
+CONVERT(NVARCHAR(1530),[close_up_detail]) AS close_up_detail,
+CONVERT(NVARCHAR(1530),[ring_front_image]) AS ring_front_image,
+CONVERT(NVARCHAR(1530),[ring_back_image]) AS ring_back_image,
+CONVERT(NVARCHAR(1530),[special_instruction]) AS special_instruction,
+CONVERT(NVARCHAR(200),[product_branding]) AS product_branding,
+CONVERT(NVARCHAR(200),[hst_code]) AS hst_code,
+CONVERT(NVARCHAR(200),[country_of_manufacture]) AS country_of_manufacture,
+CONVERT(NVARCHAR(200),[external_sku]) AS external_sku,
+CASE WHEN ISNUMERIC(REPLACE([duties_percentage],'%',''))=1 THEN (CONVERT(NUMERIC(5,3), REPLACE([duties_percentage],'%',''))/100) ELSE NULL END AS duties_percentage,
+CASE WHEN ISNUMERIC([wholesale_fob_cost])=1 THEN CONVERT(NUMERIC(9,2), [wholesale_fob_cost]) ELSE NULL END AS wholesale_fob_cost,
+CASE WHEN ISNUMERIC([wholesale_ldp_cost])=1 THEN CONVERT(NUMERIC(9,2), [wholesale_ldp_cost]) ELSE NULL END AS wholesale_ldp_cost,
+CONVERT(NVARCHAR(20),[dw_source]) AS dw_source,
+CONVERT(DATE, [from_time],120) AS [from_time],
+CONVERT(DATE, [to_time],120) AS [to_time],
+CONVERT(INT, [dw_batch_id]) AS dw_batch_id,
+CONVERT(DATETIME, [dw_created_at],120) AS [dw_created_at],
+CONVERT(DATETIME, [dw_updated_at],120) AS [dw_updated_at]
+FROM staging.dbo.dim_products_hist_2_raw
+ORDER BY CONVERT(INT, [ops_product_id]),CONVERT(INT, [dw_batch_id])</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\STAGING Source.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[product_id]"
+                      name="product_id"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[meta_title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[meta_title]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[meta_title]"
+                      name="meta_title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[url_key]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[url_key]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[url_key]"
+                      name="url_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[url_path]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[url_path]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[url_path]"
+                      name="url_path"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[base_image]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[base_image]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[base_image]"
+                      name="base_image"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[small_image]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[small_image]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[small_image]"
+                      name="small_image"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[thumbnail]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[thumbnail]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[thumbnail]"
+                      name="thumbnail"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[model_image]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[model_image]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[model_image]"
+                      name="model_image"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[close_up_detail]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[close_up_detail]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[close_up_detail]"
+                      name="close_up_detail"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[ring_front_image]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[ring_front_image]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[ring_front_image]"
+                      name="ring_front_image"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[ring_back_image]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[ring_back_image]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[ring_back_image]"
+                      name="ring_back_image"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[special_instruction]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[special_instruction]"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[special_instruction]"
+                      name="special_instruction"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[product_branding]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[product_branding]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[product_branding]"
+                      name="product_branding"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[hst_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[hst_code]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[hst_code]"
+                      name="hst_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[country_of_manufacture]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[country_of_manufacture]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[country_of_manufacture]"
+                      name="country_of_manufacture"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[external_sku]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[external_sku]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[external_sku]"
+                      name="external_sku"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[duties_percentage]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[duties_percentage]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[duties_percentage]"
+                      name="duties_percentage"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[wholesale_fob_cost]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[wholesale_fob_cost]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[wholesale_fob_cost]"
+                      name="wholesale_fob_cost"
+                      precision="9"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[wholesale_ldp_cost]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[wholesale_ldp_cost]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[wholesale_ldp_cost]"
+                      name="wholesale_ldp_cost"
+                      precision="9"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_source]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_source]"
+                      name="dw_source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[from_time]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[from_time]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[from_time]"
+                      name="from_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[to_time]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[to_time]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[to_time]"
+                      name="to_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_batch_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_batch_id]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_batch_id]"
+                      name="dw_batch_id"
+                      sortKeyPosition="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_created_at]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_created_at]"
+                      name="dw_created_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_updated_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_updated_at]"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].Columns[dw_updated_at]"
+                      name="dw_updated_at"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[meta_title]"
+                      dataType="wstr"
+                      length="1530"
+                      name="meta_title" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[url_key]"
+                      dataType="wstr"
+                      length="1530"
+                      name="url_key" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[url_path]"
+                      dataType="wstr"
+                      length="1530"
+                      name="url_path" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[base_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="base_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[small_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="small_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[thumbnail]"
+                      dataType="wstr"
+                      length="1530"
+                      name="thumbnail" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[model_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="model_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[close_up_detail]"
+                      dataType="wstr"
+                      length="1530"
+                      name="close_up_detail" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[ring_front_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="ring_front_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[ring_back_image]"
+                      dataType="wstr"
+                      length="1530"
+                      name="ring_back_image" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[special_instruction]"
+                      dataType="wstr"
+                      length="1530"
+                      name="special_instruction" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[product_branding]"
+                      dataType="wstr"
+                      length="200"
+                      name="product_branding" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[hst_code]"
+                      dataType="wstr"
+                      length="200"
+                      name="hst_code" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[country_of_manufacture]"
+                      dataType="wstr"
+                      length="200"
+                      name="country_of_manufacture" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[external_sku]"
+                      dataType="wstr"
+                      length="200"
+                      name="external_sku" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[duties_percentage]"
+                      dataType="numeric"
+                      name="duties_percentage"
+                      precision="9"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[wholesale_fob_cost]"
+                      dataType="numeric"
+                      name="wholesale_fob_cost"
+                      precision="9"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[wholesale_ldp_cost]"
+                      dataType="numeric"
+                      name="wholesale_ldp_cost"
+                      precision="9"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_source]"
+                      dataType="wstr"
+                      length="20"
+                      name="dw_source" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[from_time]"
+                      dataType="dbDate"
+                      name="from_time" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[to_time]"
+                      dataType="dbDate"
+                      name="to_time" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_batch_id]"
+                      dataType="i4"
+                      name="dw_batch_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      name="dw_created_at" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output].ExternalColumns[dw_updated_at]"
+                      dataType="dbTimeStamp"
+                      name="dw_updated_at" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      name="product_id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[meta_title]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[meta_title]"
+                      name="meta_title" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[url_key]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[url_key]"
+                      name="url_key" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[url_path]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[url_path]"
+                      name="url_path" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[base_image]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[base_image]"
+                      name="base_image" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[small_image]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[small_image]"
+                      name="small_image" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[thumbnail]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[thumbnail]"
+                      name="thumbnail" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[model_image]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[model_image]"
+                      name="model_image" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[close_up_detail]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[close_up_detail]"
+                      name="close_up_detail" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ring_front_image]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ring_front_image]"
+                      name="ring_front_image" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ring_back_image]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ring_back_image]"
+                      name="ring_back_image" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[special_instruction]"
+                      dataType="wstr"
+                      length="1530"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[special_instruction]"
+                      name="special_instruction" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[product_branding]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[product_branding]"
+                      name="product_branding" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[hst_code]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[hst_code]"
+                      name="hst_code" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[country_of_manufacture]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[country_of_manufacture]"
+                      name="country_of_manufacture" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[external_sku]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[external_sku]"
+                      name="external_sku" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[duties_percentage]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[duties_percentage]"
+                      name="duties_percentage"
+                      precision="9"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[wholesale_fob_cost]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[wholesale_fob_cost]"
+                      name="wholesale_fob_cost"
+                      precision="9"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[wholesale_ldp_cost]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[wholesale_ldp_cost]"
+                      name="wholesale_ldp_cost"
+                      precision="9"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_source]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_source]"
+                      name="dw_source" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[from_time]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[from_time]"
+                      name="from_time" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[to_time]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[to_time]"
+                      name="to_time" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_batch_id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_batch_id]"
+                      name="dw_batch_id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_created_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_created_at]"
+                      name="dw_created_at" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_updated_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[dw_updated_at]"
+                      name="dw_updated_at" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\MERCH_PROD Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\STAGING Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate MERCH_PROD Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Clear data from dbo.products_hist_2"
+      DTS:DTSID="{8544C1B2-7D10-41BF-8425-78C4B5254C2A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate MERCH_PROD Tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE merch_prod.dbo.products_hist_2" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{36C725ED-FCF6-40B8-96C7-BE0CC08A8DF5}"
+      DTS:From="Package\Truncate MERCH_PROD Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="225.6,41.6"
+          Id="Package\Truncate MERCH_PROD Tables"
+          TopLeft="64.0000010899135,34.2588240098788" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Data Flow Task"
+          TopLeft="373.142863497442,91.7647071693183" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="289.600001089914,55.0588240098788">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="83.5428624075287,57.5058831594395"
+              Start="0,0"
+              End="76.0428624075287,57.5058831594395">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="37.7714312037644,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="37.7714312037644,0"
+                    Point2="41.7714312037644,0"
+                    Point3="41.7714312037644,4" />
+                  <mssgle:LineSegment
+                    End="41.7714312037644,53.5058831594395" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41.7714312037644,53.5058831594395"
+                    Point2="41.7714312037644,57.5058831594395"
+                    Point3="45.7714312037644,57.5058831594395" />
+                  <mssgle:LineSegment
+                    End="76.0428624075287,57.5058831594395" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="158.4,41.6"
+          Id="Package\Data Flow Task\STAGING Source"
+          TopLeft="76.0000012942724,29.976471008644" />
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\Data Flow Task\MERCH_PROD Destination"
+          TopLeft="304.571433758249,43.4352947268107" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="234.400001294272,50.776471008644">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="70.1714324639767,13.4588237181667"
+              Start="0,0"
+              End="62.6714324639767,13.4588237181667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="31.0857162319884,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31.0857162319884,0"
+                    Point2="35.0857162319884,0"
+                    Point3="35.0857162319884,4" />
+                  <mssgle:LineSegment
+                    End="35.0857162319884,9.45882371816668" />
+                  <mssgle:CubicBezierSegment
+                    Point1="35.0857162319884,9.45882371816668"
+                    Point2="35.0857162319884,13.4588237181667"
+                    Point3="39.0857162319884,13.4588237181667" />
+                  <mssgle:LineSegment
+                    End="62.6714324639767,13.4588237181667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\STAGING Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\MERCH_PROD Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,2001 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/1/2017 10:18:55 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{9C6BEA66-611B-49A6-89B3-F255814C910F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1301.433"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="wms_trans_log"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{F2E7BD04-CA47-45C6-AF4C-B9345F8E05A0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete existing data MERCH_PROD data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Deletes all transactions whose updated_at date is included in Staging table data"
+      DTS:DTSID="{1F3D62B4-A269-4982-9A0F-E023705C0F7F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete existing data MERCH_PROD data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:SqlStatementSource="DECLARE @DELDT DATE&#xA;SET @DELDT = (SELECT CAST(MIN(updated_at) AS DATE) FROM staging.dbo.wms_trans_log_raw)&#xA;&#xA;DELETE FROM dbo.wms_trans_log&#xA;&#xA;WHERE CAST(updated_at AS DATE) &gt;= @DELDT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Disable NC indexes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F5E10C14-EED4-44C5-BEDA-E6F910858321}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Disable NC indexes"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:SqlStatementSource="DECLARE @EnableOrRebuild as nvarchar(20) &#xA;SET @EnableOrRebuild = 'DISABLE'  &#xA;DECLARE @TableName as nvarchar(200) = 'wms_trans_log' -- Enter your table name here&#xA;DECLARE @SchemaName as nvarchar(200) = 'dbo' -- Enter the schema here&#xA;DECLARE @Sql AS nvarchar(MAX)='';&#xA;&#xA;SELECT @Sql = @Sql + N'ALTER INDEX ' + quotename(i.name) + N' ON ' + quotename(s.name) + '.' + quotename(o.name) + ' ' + @EnableOrRebuild + N';' + CHAR(13) + CHAR(10)&#xA;  FROM sys.indexes i&#xA; INNER JOIN sys.objects o ON i.object_id = o.object_id&#xA; INNER JOIN sys.schemas s ON s.schema_id = o.schema_id&#xA; WHERE i.type_desc = N'NONCLUSTERED'&#xA;   AND o.type_desc = N'USER_TABLE'&#xA;   AND o.name = @TableName &#xA;   AND s.name = @SchemaName&#xA;&#xA;EXEC (@Sql);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Rebuild NC indexes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6C6A41E0-1986-4E38-8049-40A9005BD05E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Rebuild NC indexes"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:SqlStatementSource="DECLARE @EnableOrRebuild as nvarchar(20) &#xA;SET @EnableOrRebuild = 'REBUILD'&#xA;DECLARE @TableName as nvarchar(200) = 'wms_trans_log' -- Enter your table name here&#xA;DECLARE @SchemaName as nvarchar(200) = 'dbo' -- Enter the schema here&#xA;DECLARE @Sql AS nvarchar(MAX)='';&#xA;&#xA;SELECT @Sql = @Sql + N'ALTER INDEX ' + quotename(i.name) + N' ON ' + quotename(s.name) + '.' + quotename(o.name) + ' ' + @EnableOrRebuild + N';' + CHAR(13) + CHAR(10)&#xA;  FROM sys.indexes i&#xA; INNER JOIN sys.objects o ON i.object_id = o.object_id&#xA; INNER JOIN sys.schemas s ON s.schema_id = o.schema_id&#xA; WHERE i.type_desc = N'NONCLUSTERED'&#xA;   AND o.type_desc = N'USER_TABLE'&#xA;   AND o.name = @TableName &#xA;   AND s.name = @SchemaName&#xA;&#xA;EXEC (@Sql);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{682923B3-8846-4FD5-9B4A-4B21DD5DFAAF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5154E80B-AC2A-48F2-8753-3FB60C61299D}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.wms_trans_log_raw" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update MERCH_PROD table with Staging table data"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B0B1A4FE-59AA-4F0A-BBEC-B063F2606BEF}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update MERCH_PROD table with Staging table data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="29700"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Merch_prod"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[wms_trans_log]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[tran_log_id]"
+                      cachedDataType="i4"
+                      cachedName="tran_log_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[tran_log_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_log_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[tran_type]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="tran_type"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[tran_type]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_type]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[description]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="description"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[description]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[description]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[start_tran_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="start_tran_at"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[start_tran_at]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[start_tran_at]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[end_tran_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="end_tran_at"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[end_tran_at]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[end_tran_at]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[employee_id]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="employee_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[employee_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[employee_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[control_number]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="control_number"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[control_number]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[control_number]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[line_number]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="line_number"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[line_number]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[line_number]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[control_number_2]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="control_number_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[control_number_2]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[control_number_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[outside_id]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="outside_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[outside_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[outside_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[wh_id]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="wh_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[wh_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[wh_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[location_id]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="location_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[location_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[location_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[hu_id]"
+                      cachedDataType="wstr"
+                      cachedLength="22"
+                      cachedName="hu_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[hu_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[hu_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[num_items]"
+                      cachedDataType="i4"
+                      cachedName="num_items"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[num_items]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[num_items]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[item_number]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="item_number"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[item_number]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[item_number]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[lot_number]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="lot_number"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[lot_number]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[lot_number]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[uom]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="uom"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[uom]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[uom]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[tran_qty]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="tran_qty"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[tran_qty]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_qty]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[wh_id_2]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="wh_id_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[wh_id_2]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[wh_id_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[location_id_2]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="location_id_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[location_id_2]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[location_id_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[verify_status]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="verify_status"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[verify_status]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[verify_status]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[employee_id_2]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="employee_id_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[employee_id_2]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[employee_id_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[routing_code]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="routing_code"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[routing_code]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[routing_code]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[hu_id_2]"
+                      cachedDataType="wstr"
+                      cachedLength="22"
+                      cachedName="hu_id_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[hu_id_2]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[hu_id_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[return_disposition]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="return_disposition"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[return_disposition]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[return_disposition]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[elapsed_time]"
+                      cachedDataType="i4"
+                      cachedName="elapsed_time"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[elapsed_time]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[elapsed_time]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[source_storage_type]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="source_storage_type"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[source_storage_type]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[source_storage_type]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[destination_storage_type]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="destination_storage_type"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[destination_storage_type]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[destination_storage_type]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_1]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_1"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_1]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_1]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_2]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_2]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_3]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_3"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_3]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_3]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_4]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_4"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_4]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_4]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_5]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_5"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_5]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_5]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_6]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_6"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_6]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_6]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_7]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_7"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_7]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_7]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_8]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_8"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_8]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_8]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_9]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_9"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_9]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_9]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_10]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_10"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_10]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_10]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[generic_attribute_11]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="generic_attribute_11"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_11]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_11]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[display_item_number]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="display_item_number"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[display_item_number]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[display_item_number]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[client_code]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="client_code"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[client_code]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[client_code]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[file_log_id]"
+                      cachedDataType="i4"
+                      cachedName="file_log_id"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[file_log_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[file_log_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].Columns[updated_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="updated_at"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[updated_at]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[updated_at]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[tran_log_id]"
+                      dataType="i4"
+                      name="tran_log_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[tran_type]"
+                      dataType="wstr"
+                      length="3"
+                      name="tran_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[description]"
+                      dataType="wstr"
+                      length="50"
+                      name="description" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[start_tran_at]"
+                      dataType="dbTimeStamp"
+                      name="start_tran_at" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[end_tran_at]"
+                      dataType="dbTimeStamp"
+                      name="end_tran_at" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[employee_id]"
+                      dataType="wstr"
+                      length="10"
+                      name="employee_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[control_number]"
+                      dataType="wstr"
+                      length="30"
+                      name="control_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[line_number]"
+                      dataType="wstr"
+                      length="5"
+                      name="line_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[control_number_2]"
+                      dataType="wstr"
+                      length="30"
+                      name="control_number_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[outside_id]"
+                      dataType="wstr"
+                      length="10"
+                      name="outside_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[wh_id]"
+                      dataType="wstr"
+                      length="10"
+                      name="wh_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[location_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="location_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[hu_id]"
+                      dataType="wstr"
+                      length="22"
+                      name="hu_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[num_items]"
+                      dataType="i4"
+                      name="num_items" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[item_number]"
+                      dataType="wstr"
+                      length="30"
+                      name="item_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[lot_number]"
+                      dataType="wstr"
+                      length="15"
+                      name="lot_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[uom]"
+                      dataType="wstr"
+                      length="10"
+                      name="uom" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[tran_qty]"
+                      dataType="wstr"
+                      length="20"
+                      name="tran_qty" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[wh_id_2]"
+                      dataType="wstr"
+                      length="10"
+                      name="wh_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[location_id_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="location_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[verify_status]"
+                      dataType="wstr"
+                      length="1"
+                      name="verify_status" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[employee_id_2]"
+                      dataType="wstr"
+                      length="10"
+                      name="employee_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[routing_code]"
+                      dataType="wstr"
+                      length="30"
+                      name="routing_code" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[hu_id_2]"
+                      dataType="wstr"
+                      length="22"
+                      name="hu_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[return_disposition]"
+                      dataType="wstr"
+                      length="30"
+                      name="return_disposition" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[elapsed_time]"
+                      dataType="i4"
+                      name="elapsed_time" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[source_storage_type]"
+                      dataType="wstr"
+                      length="30"
+                      name="source_storage_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[destination_storage_type]"
+                      dataType="wstr"
+                      length="30"
+                      name="destination_storage_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_1]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_1" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_2]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_3]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_3" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_4]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_4" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_5]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_5" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_6]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_6" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_7]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_7" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_8]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_8" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_9]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_9" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_10]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_10" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[generic_attribute_11]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_11" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[display_item_number]"
+                      dataType="wstr"
+                      length="30"
+                      name="display_item_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[client_code]"
+                      dataType="wstr"
+                      length="30"
+                      name="client_code" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[file_log_id]"
+                      dataType="i4"
+                      name="file_log_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input].ExternalColumns[updated_at]"
+                      dataType="dbTimeStamp"
+                      name="updated_at" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update MERCH_PROD table with Staging table data\Staging tables"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Staging tables"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+CASE WHEN ISNUMERIC(tran_log_id)=1 THEN CONVERT(int, tran_log_id) ELSE NULL END AS tran_log_id,
+CONVERT(nvarchar(3), tran_type) AS tran_type,
+CONVERT(nvarchar(50), description) AS description,
+CASE WHEN ISDATE (LEFT(start_tran_at,19))=1 THEN CONVERT(datetime, LEFT(start_tran_at,19),120) ELSE NULL END AS start_tran_at,
+CASE WHEN ISDATE (LEFT(end_tran_at,19))=1 THEN CONVERT(datetime,LEFT(end_tran_at,19),120) ELSE NULL END AS end_tran_at,
+CONVERT(nvarchar(10), employee_id) AS employee_id,
+CONVERT(nvarchar(30), control_number) AS control_number,
+CONVERT(nvarchar(5), line_number) AS line_number,
+CONVERT(nvarchar(30), control_number_2) AS control_number_2,
+CONVERT(nvarchar(10), outside_id) AS outside_id,
+CONVERT(nvarchar(10), wh_id) AS wh_id,
+CONVERT(nvarchar(50), location_id) AS location_id,
+CONVERT(nvarchar(22), hu_id) AS hu_id,
+CASE WHEN ISNUMERIC(num_items)=1 THEN CONVERT(int, num_items) ELSE NULL END AS num_items,
+CONVERT(nvarchar(30), item_number) AS item_number,
+CONVERT(nvarchar(15), lot_number) AS lot_number,
+CONVERT(nvarchar(10), uom) AS uom,
+CONVERT(nvarchar(20), tran_qty) AS tran_qty,
+CONVERT(nvarchar(10), wh_id_2) AS wh_id_2,
+CONVERT(nvarchar(50), location_id_2) AS location_id_2,
+CONVERT(nvarchar(1), verify_status) AS verify_status,
+CONVERT(nvarchar(10), employee_id_2) AS employee_id_2,
+CONVERT(nvarchar(30), routing_code) AS routing_code,
+CONVERT(nvarchar(22), hu_id_2) AS hu_id_2,
+CONVERT(nvarchar(30), return_disposition) AS return_disposition,
+CASE WHEN ISNUMERIC(elapsed_time)=1 THEN CONVERT(int, elapsed_time) ELSE NULL END AS elapsed_time,
+CONVERT(nvarchar(30), source_storage_type) AS source_storage_type,
+CONVERT(nvarchar(30), destination_storage_type) AS destination_storage_type,
+CONVERT(nvarchar(250), generic_attribute_1) AS generic_attribute_1,
+CONVERT(nvarchar(250), generic_attribute_2) AS generic_attribute_2,
+CONVERT(nvarchar(250), generic_attribute_3) AS generic_attribute_3,
+CONVERT(nvarchar(250), generic_attribute_4) AS generic_attribute_4,
+CONVERT(nvarchar(250), generic_attribute_5) AS generic_attribute_5,
+CONVERT(nvarchar(250), generic_attribute_6) AS generic_attribute_6,
+CONVERT(nvarchar(250), generic_attribute_7) AS generic_attribute_7,
+CONVERT(nvarchar(250), generic_attribute_8) AS generic_attribute_8,
+CONVERT(nvarchar(250), generic_attribute_9) AS generic_attribute_9,
+CONVERT(nvarchar(250), generic_attribute_10) AS generic_attribute_10,
+CONVERT(nvarchar(250), generic_attribute_11) AS generic_attribute_11,
+CONVERT(nvarchar(30), display_item_number) AS display_item_number,
+CONVERT(nvarchar(30), client_code) AS client_code,
+CASE WHEN ISNUMERIC(file_log_id)=1 THEN CONVERT(int, file_log_id) ELSE NULL END AS file_log_id,
+CASE WHEN ISDATE (LEFT(updated_at,19))=1 THEN CONVERT(datetime,LEFT(updated_at,19),120) ELSE NULL END AS updated_at
+FROM staging.dbo.wms_trans_log_raw
+ORDER BY tran_log_id</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_log_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[tran_log_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_log_id]"
+                      name="tran_log_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[tran_type]"
+                      length="3"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_type]"
+                      name="tran_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[description]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[description]"
+                      name="description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[start_tran_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[start_tran_at]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[start_tran_at]"
+                      name="start_tran_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[end_tran_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[end_tran_at]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[end_tran_at]"
+                      name="end_tran_at"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[employee_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[employee_id]"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[employee_id]"
+                      name="employee_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[control_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[control_number]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[control_number]"
+                      name="control_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[line_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[line_number]"
+                      length="5"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[line_number]"
+                      name="line_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[control_number_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[control_number_2]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[control_number_2]"
+                      name="control_number_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[outside_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[outside_id]"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[outside_id]"
+                      name="outside_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[wh_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[wh_id]"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[wh_id]"
+                      name="wh_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[location_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[location_id]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[location_id]"
+                      name="location_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[hu_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[hu_id]"
+                      length="22"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[hu_id]"
+                      name="hu_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[num_items]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[num_items]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[num_items]"
+                      name="num_items"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[item_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[item_number]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[item_number]"
+                      name="item_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[lot_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[lot_number]"
+                      length="15"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[lot_number]"
+                      name="lot_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[uom]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[uom]"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[uom]"
+                      name="uom"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_qty]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[tran_qty]"
+                      length="20"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[tran_qty]"
+                      name="tran_qty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[wh_id_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[wh_id_2]"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[wh_id_2]"
+                      name="wh_id_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[location_id_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[location_id_2]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[location_id_2]"
+                      name="location_id_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[verify_status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[verify_status]"
+                      length="1"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[verify_status]"
+                      name="verify_status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[employee_id_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[employee_id_2]"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[employee_id_2]"
+                      name="employee_id_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[routing_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[routing_code]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[routing_code]"
+                      name="routing_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[hu_id_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[hu_id_2]"
+                      length="22"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[hu_id_2]"
+                      name="hu_id_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[return_disposition]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[return_disposition]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[return_disposition]"
+                      name="return_disposition"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[elapsed_time]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[elapsed_time]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[elapsed_time]"
+                      name="elapsed_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[source_storage_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[source_storage_type]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[source_storage_type]"
+                      name="source_storage_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[destination_storage_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[destination_storage_type]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[destination_storage_type]"
+                      name="destination_storage_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_1]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_1]"
+                      name="generic_attribute_1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_2]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_2]"
+                      name="generic_attribute_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_3]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_3]"
+                      name="generic_attribute_3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_4]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_4]"
+                      name="generic_attribute_4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_5]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_5]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_5]"
+                      name="generic_attribute_5"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_6]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_6]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_6]"
+                      name="generic_attribute_6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_7]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_7]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_7]"
+                      name="generic_attribute_7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_8]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_8]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_8]"
+                      name="generic_attribute_8"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_9]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_9]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_9]"
+                      name="generic_attribute_9"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_10]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_10]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_10]"
+                      name="generic_attribute_10"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_11]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_11]"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[generic_attribute_11]"
+                      name="generic_attribute_11"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[display_item_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[display_item_number]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[display_item_number]"
+                      name="display_item_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[client_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[client_code]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[client_code]"
+                      name="client_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[file_log_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[file_log_id]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[file_log_id]"
+                      name="file_log_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[updated_at]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[updated_at]"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].Columns[updated_at]"
+                      name="updated_at"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[tran_log_id]"
+                      dataType="i4"
+                      name="tran_log_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[tran_type]"
+                      dataType="wstr"
+                      length="3"
+                      name="tran_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[description]"
+                      dataType="wstr"
+                      length="50"
+                      name="description" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[start_tran_at]"
+                      dataType="dbTimeStamp"
+                      name="start_tran_at" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[end_tran_at]"
+                      dataType="dbTimeStamp"
+                      name="end_tran_at" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[employee_id]"
+                      dataType="wstr"
+                      length="10"
+                      name="employee_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[control_number]"
+                      dataType="wstr"
+                      length="30"
+                      name="control_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[line_number]"
+                      dataType="wstr"
+                      length="5"
+                      name="line_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[control_number_2]"
+                      dataType="wstr"
+                      length="30"
+                      name="control_number_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[outside_id]"
+                      dataType="wstr"
+                      length="10"
+                      name="outside_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[wh_id]"
+                      dataType="wstr"
+                      length="10"
+                      name="wh_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[location_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="location_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[hu_id]"
+                      dataType="wstr"
+                      length="22"
+                      name="hu_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[num_items]"
+                      dataType="i4"
+                      name="num_items" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[item_number]"
+                      dataType="wstr"
+                      length="30"
+                      name="item_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[lot_number]"
+                      dataType="wstr"
+                      length="15"
+                      name="lot_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[uom]"
+                      dataType="wstr"
+                      length="10"
+                      name="uom" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[tran_qty]"
+                      dataType="wstr"
+                      length="20"
+                      name="tran_qty" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[wh_id_2]"
+                      dataType="wstr"
+                      length="10"
+                      name="wh_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[location_id_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="location_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[verify_status]"
+                      dataType="wstr"
+                      length="1"
+                      name="verify_status" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[employee_id_2]"
+                      dataType="wstr"
+                      length="10"
+                      name="employee_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[routing_code]"
+                      dataType="wstr"
+                      length="30"
+                      name="routing_code" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[hu_id_2]"
+                      dataType="wstr"
+                      length="22"
+                      name="hu_id_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[return_disposition]"
+                      dataType="wstr"
+                      length="30"
+                      name="return_disposition" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[elapsed_time]"
+                      dataType="i4"
+                      name="elapsed_time" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[source_storage_type]"
+                      dataType="wstr"
+                      length="30"
+                      name="source_storage_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[destination_storage_type]"
+                      dataType="wstr"
+                      length="30"
+                      name="destination_storage_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_1]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_1" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_2]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_3]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_3" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_4]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_4" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_5]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_5" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_6]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_6" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_7]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_7" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_8]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_8" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_9]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_9" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_10]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_10" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[generic_attribute_11]"
+                      dataType="wstr"
+                      length="250"
+                      name="generic_attribute_11" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[display_item_number]"
+                      dataType="wstr"
+                      length="30"
+                      name="display_item_number" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[client_code]"
+                      dataType="wstr"
+                      length="30"
+                      name="client_code" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[file_log_id]"
+                      dataType="i4"
+                      name="file_log_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output].ExternalColumns[updated_at]"
+                      dataType="dbTimeStamp"
+                      name="updated_at" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[tran_log_id]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[tran_log_id]"
+                      name="tran_log_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[tran_type]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[tran_type]"
+                      name="tran_type" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[description]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[description]"
+                      name="description" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[start_tran_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[start_tran_at]"
+                      name="start_tran_at" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[end_tran_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[end_tran_at]"
+                      name="end_tran_at" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[employee_id]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[employee_id]"
+                      name="employee_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[control_number]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[control_number]"
+                      name="control_number" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[line_number]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[line_number]"
+                      name="line_number" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[control_number_2]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[control_number_2]"
+                      name="control_number_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[outside_id]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[outside_id]"
+                      name="outside_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[wh_id]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[wh_id]"
+                      name="wh_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[location_id]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[location_id]"
+                      name="location_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[hu_id]"
+                      dataType="wstr"
+                      length="22"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[hu_id]"
+                      name="hu_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[num_items]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[num_items]"
+                      name="num_items" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[item_number]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[item_number]"
+                      name="item_number" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[lot_number]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[lot_number]"
+                      name="lot_number" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[uom]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[uom]"
+                      name="uom" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[tran_qty]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[tran_qty]"
+                      name="tran_qty" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[wh_id_2]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[wh_id_2]"
+                      name="wh_id_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[location_id_2]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[location_id_2]"
+                      name="location_id_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[verify_status]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[verify_status]"
+                      name="verify_status" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[employee_id_2]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[employee_id_2]"
+                      name="employee_id_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[routing_code]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[routing_code]"
+                      name="routing_code" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[hu_id_2]"
+                      dataType="wstr"
+                      length="22"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[hu_id_2]"
+                      name="hu_id_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[return_disposition]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[return_disposition]"
+                      name="return_disposition" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[elapsed_time]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[elapsed_time]"
+                      name="elapsed_time" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[source_storage_type]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[source_storage_type]"
+                      name="source_storage_type" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[destination_storage_type]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[destination_storage_type]"
+                      name="destination_storage_type" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_1]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_1]"
+                      name="generic_attribute_1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_2]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_2]"
+                      name="generic_attribute_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_3]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_3]"
+                      name="generic_attribute_3" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_4]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_4]"
+                      name="generic_attribute_4" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_5]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_5]"
+                      name="generic_attribute_5" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_6]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_6]"
+                      name="generic_attribute_6" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_7]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_7]"
+                      name="generic_attribute_7" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_8]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_8]"
+                      name="generic_attribute_8" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_9]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_9]"
+                      name="generic_attribute_9" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_10]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_10]"
+                      name="generic_attribute_10" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_11]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[generic_attribute_11]"
+                      name="generic_attribute_11" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[display_item_number]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[display_item_number]"
+                      name="display_item_number" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[client_code]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[client_code]"
+                      name="client_code" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[file_log_id]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[file_log_id]"
+                      name="file_log_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[updated_at]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[updated_at]"
+                      name="updated_at" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update MERCH_PROD table with Staging table data.Paths[OLE DB Source Output]"
+              endId="Package\Update MERCH_PROD table with Staging table data\Merch_prod.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Update MERCH_PROD table with Staging table data\Staging tables.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A62F30CB-F4A9-48FF-816B-B1E6A7FE34A0}"
+      DTS:From="Package\Delete existing data MERCH_PROD data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Disable NC indexes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1B0EBBEA-0DB8-4464-B194-A87490E5D510}"
+      DTS:From="Package\Disable NC indexes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update MERCH_PROD table with Staging table data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{42D0E047-2EF9-4BC7-9EB4-D42D16EDF2C4}"
+      DTS:From="Package\Update MERCH_PROD table with Staging table data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Rebuild NC indexes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{AE5E462C-CA92-4227-B1FB-CEED20BEC57F}"
+      DTS:From="Package\Rebuild NC indexes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Truncate Staging Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="237,42"
+          Id="Package\Delete existing data MERCH_PROD data"
+          TopLeft="21.0476214874899,19.290980835464" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Disable NC indexes"
+          TopLeft="291.999988396963,26.3466668760512" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Rebuild NC indexes"
+          TopLeft="315.666654162937,194.440001537323" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Truncate Staging Table"
+          TopLeft="115.999995390574,263.466668760512" />
+        <NodeLayout
+          Size="336,42"
+          Id="Package\Update MERCH_PROD table with Staging table data"
+          TopLeft="115.142865348024,116.07215862545" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="257.84762148749,43.6188238557576">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34.152366909473,0"
+              Start="0,0"
+              End="26.652366909473,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="26.652366909473,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="376.999988396963,68.3466668760512">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-93.857123048939,47.7254917493988"
+              Start="0,0"
+              End="-93.857123048939,40.2254917493988">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.8627458746994" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.8627458746994"
+                    Point2="0,23.8627458746994"
+                    Point3="-4,23.8627458746994" />
+                  <mssgle:LineSegment
+                    End="-89.857123048939,23.8627458746994" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-89.857123048939,23.8627458746994"
+                    Point2="-93.857123048939,23.8627458746994"
+                    Point3="-93.857123048939,27.8627458746994" />
+                  <mssgle:LineSegment
+                    End="-93.857123048939,40.2254917493988" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="283.142865348024,158.07215862545">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117.523788814913,36.367842911873"
+              Start="0,0"
+              End="117.523788814913,28.867842911873">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.1839214559365" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.1839214559365"
+                    Point2="0,18.1839214559365"
+                    Point3="4,18.1839214559365" />
+                  <mssgle:LineSegment
+                    End="113.523788814913,18.1839214559365" />
+                  <mssgle:CubicBezierSegment
+                    Point1="113.523788814913,18.1839214559365"
+                    Point2="117.523788814913,18.1839214559365"
+                    Point3="117.523788814913,22.1839214559365" />
+                  <mssgle:LineSegment
+                    End="117.523788814913,28.867842911873" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="400.666654162937,236.440001537323">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-191.666658772363,27.026667223189"
+              Start="0,0"
+              End="-191.666658772363,19.526667223189">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.51333361159449" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.51333361159449"
+                    Point2="0,13.5133336115945"
+                    Point3="-4,13.5133336115945" />
+                  <mssgle:LineSegment
+                    End="-187.666658772363,13.5133336115945" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-187.666658772363,13.5133336115945"
+                    Point2="-191.666658772363,13.5133336115945"
+                    Point3="-191.666658772363,17.5133336115945" />
+                  <mssgle:LineSegment
+                    End="-191.666658772363,19.526667223189" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update MERCH_PROD table with Staging table data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="134.4,41.6"
+          Id="Package\Update MERCH_PROD table with Staging table data\Merch_prod"
+          TopLeft="237.142861181376,110.117648603182" />
+        <NodeLayout
+          Size="145.6,41.6"
+          Id="Package\Update MERCH_PROD table with Staging table data\Staging tables"
+          TopLeft="70.8571440638328,33.6470592954167" />
+        <EdgeLayout
+          Id="Package\Update MERCH_PROD table with Staging table data.Paths[OLE DB Source Output]"
+          TopLeft="143.657144063833,75.2470592954167">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="160.685717117543,34.8705893077652"
+              Start="0,0"
+              End="160.685717117543,27.3705893077652">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.4352946538826" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.4352946538826"
+                    Point2="0,17.4352946538826"
+                    Point3="4,17.4352946538826" />
+                  <mssgle:LineSegment
+                    End="156.685717117543,17.4352946538826" />
+                  <mssgle:CubicBezierSegment
+                    Point1="156.685717117543,17.4352946538826"
+                    Point2="160.685717117543,17.4352946538826"
+                    Point3="160.685717117543,21.4352946538826" />
+                  <mssgle:LineSegment
+                    End="160.685717117543,27.3705893077652" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update MERCH_PROD table with Staging table data\Merch_prod">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update MERCH_PROD table with Staging table data\Staging tables">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

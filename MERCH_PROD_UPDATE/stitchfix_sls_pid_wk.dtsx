@@ -1,0 +1,690 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/15/2018 11:18:29 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\paul.kanterman"
+  DTS:DTSID="{34BDDAE9-B069-43DE-B625-DB4BE6F58A3B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="stitchfix_sls_pid_wk"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{44367698-B025-40F5-9C6E-53D2BE148AB0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[StitchFix_SalesStock]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{9081438E-0636-46B4-8405-94730D65E490}"
+      DTS:ObjectName="StitchFix_SalesStock">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\FS02-VM-NYC\Baublebar Folders\Merchandising\Merchandise_Analytics\RetailSales\StitchFix\StitchFix_SalesStock_Compiler.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Clear existing data from table"
+      DTS:DTSID="{7FAC147A-940E-4DE4-B564-05A9F90203BC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{682B6256-E787-49CA-8259-C76570AFE216}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE wholesale.dbo.stitchfix_sales_pid_wk" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload to WHOLESALE table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2EDBD690-6A54-4588-9263-EAC5536A5554}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload to WHOLESALE table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="6400"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload to WHOLESALE table\Sales and Stock File"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Sales and Stock File"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload to WHOLESALE table\Sales and Stock File.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[StitchFix_SalesStock]"
+                  connectionManagerRefId="Package.ConnectionManagers[StitchFix_SalesStock]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output]"
+                  isSorted="true"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_yr]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[rtl_yr]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_yr]"
+                      name="rtl_yr"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_pd]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[rtl_pd]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_pd]"
+                      name="rtl_pd"
+                      sortKeyPosition="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_wk]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[rtl_wk]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_wk]"
+                      name="rtl_wk"
+                      sortKeyPosition="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[bb_product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[bb_product_id]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[bb_product_id]"
+                      name="bb_product_id"
+                      sortKeyPosition="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[sls_u]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[sls_u]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[sls_u]"
+                      name="sls_u"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[sls_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[sls_amt]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[sls_amt]"
+                      name="sls_amt"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[oh_u]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[oh_u]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[oh_u]"
+                      name="oh_u"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[oh_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[oh_amt]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[oh_amt]"
+                      name="oh_amt"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[rtl_yr]"
+                      dataType="r8"
+                      name="rtl_yr" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[rtl_pd]"
+                      dataType="r8"
+                      name="rtl_pd" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[rtl_wk]"
+                      dataType="r8"
+                      name="rtl_wk" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[bb_product_id]"
+                      dataType="r8"
+                      name="bb_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[sls_u]"
+                      dataType="r8"
+                      name="sls_u" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[sls_amt]"
+                      dataType="r8"
+                      name="sls_amt" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[oh_u]"
+                      dataType="r8"
+                      name="oh_u" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[oh_amt]"
+                      dataType="r8"
+                      name="oh_amt" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[F9]"
+                      dataType="wstr"
+                      length="255"
+                      name="F9" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[na]"
+                      dataType="wstr"
+                      length="255"
+                      name="na" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[na1]"
+                      dataType="wstr"
+                      length="255"
+                      name="na1" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[F12]"
+                      dataType="wstr"
+                      length="255"
+                      name="F12" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[na2]"
+                      dataType="wstr"
+                      length="255"
+                      name="na2" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[na3]"
+                      dataType="wstr"
+                      length="255"
+                      name="na3" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[na4]"
+                      dataType="wstr"
+                      length="255"
+                      name="na4" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].ExternalColumns[na5]"
+                      dataType="wstr"
+                      length="255"
+                      name="na5" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[rtl_yr]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[rtl_yr]"
+                      name="rtl_yr" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[rtl_pd]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[rtl_pd]"
+                      name="rtl_pd" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[rtl_wk]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[rtl_wk]"
+                      name="rtl_wk" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[bb_product_id]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[bb_product_id]"
+                      name="bb_product_id" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[sls_u]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[sls_u]"
+                      name="sls_u" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[sls_amt]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[sls_amt]"
+                      name="sls_amt" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[oh_u]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[oh_u]"
+                      name="oh_u" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[oh_amt]"
+                      dataType="r8"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[oh_amt]"
+                      name="oh_amt" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload to WHOLESALE table\WHOLESALE table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="WHOLESALE table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[stitchfix_sales_pid_wk]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,ORDER(rtl_yr ASC,rtl_pd ASC,rtl_wk ASC,product_id ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload to WHOLESALE table\WHOLESALE table.Connections[OleDbConnection]"
+                  connectionManagerID="{682B6256-E787-49CA-8259-C76570AFE216}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[WHOLESALE]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[rtl_yr]"
+                      cachedDataType="i4"
+                      cachedName="rtl_yr"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_yr]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_yr]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[rtl_pd]"
+                      cachedDataType="i4"
+                      cachedName="rtl_pd"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_pd]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_pd]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[rtl_wk]"
+                      cachedDataType="i4"
+                      cachedName="rtl_wk"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_wk]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[rtl_wk]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[sls_u]"
+                      cachedDataType="i4"
+                      cachedName="sls_u"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[sls_u]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[sls_u]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[sls_amt]"
+                      cachedDataType="numeric"
+                      cachedName="sls_amt"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[sls_amt]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[oh_u]"
+                      cachedDataType="i4"
+                      cachedName="oh_u"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[oh_u]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[oh_u]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[oh_amt]"
+                      cachedDataType="numeric"
+                      cachedName="oh_amt"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[oh_amt]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[oh_amt]" />
+                    <inputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].Columns[bb_product_id]"
+                      cachedDataType="i4"
+                      cachedName="bb_product_id"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output].Columns[bb_product_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_yr]"
+                      dataType="i4"
+                      name="rtl_yr" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_pd]"
+                      dataType="i4"
+                      name="rtl_pd" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_wk]"
+                      dataType="i4"
+                      name="rtl_wk" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[sls_u]"
+                      dataType="i4"
+                      name="sls_u" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt]"
+                      dataType="numeric"
+                      name="sls_amt"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[oh_u]"
+                      dataType="i4"
+                      name="oh_u" />
+                    <externalMetadataColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input].ExternalColumns[oh_amt]"
+                      dataType="numeric"
+                      name="oh_amt"
+                      precision="10"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload to WHOLESALE table\WHOLESALE table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload to WHOLESALE table\WHOLESALE table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload to WHOLESALE table\WHOLESALE table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload to WHOLESALE table\WHOLESALE table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload to WHOLESALE table.Paths[Excel Source Output]"
+              endId="Package\Upload to WHOLESALE table\WHOLESALE table.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Upload to WHOLESALE table\Sales and Stock File.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2C089890-C0DE-45AF-A8DA-51BB989631BE}"
+      DTS:From="Package\Truncate Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Upload to WHOLESALE table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="148.8,41.6"
+          Id="Package\Truncate Table"
+          TopLeft="38.2857149377161,21.4117650061743" />
+        <NodeLayout
+          Size="212.8,41.6"
+          Id="Package\Upload to WHOLESALE table"
+          TopLeft="252.571432872694,40.9882358689622" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="187.085714937716,42.2117650061743">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.4857179349783,19.5764708627879"
+              Start="0,0"
+              End="57.9857179349783,19.5764708627879">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="28.7428589674891,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="28.7428589674891,0"
+                    Point2="32.7428589674891,0"
+                    Point3="32.7428589674891,4" />
+                  <mssgle:LineSegment
+                    End="32.7428589674891,15.5764708627879" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.7428589674891,15.5764708627879"
+                    Point2="32.7428589674891,19.5764708627879"
+                    Point3="36.7428589674891,19.5764708627879" />
+                  <mssgle:LineSegment
+                    End="57.9857179349783,19.5764708627879" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Upload to WHOLESALE table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\Upload to WHOLESALE table\WHOLESALE table"
+          TopLeft="328.000005585807,49.5529418714319" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\Upload to WHOLESALE table\Sales and Stock File"
+          TopLeft="72.5714298073127,31.8117651520303" />
+        <EdgeLayout
+          Id="Package\Upload to WHOLESALE table.Paths[Excel Source Output]"
+          TopLeft="245.371429807313,52.6117651520303">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="82.6285757784941,17.7411767194015"
+              Start="0,0"
+              End="75.1285757784941,17.7411767194015">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="37.314287889247,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="37.314287889247,0"
+                    Point2="41.314287889247,0"
+                    Point3="41.314287889247,4" />
+                  <mssgle:LineSegment
+                    End="41.314287889247,13.7411767194015" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41.314287889247,13.7411767194015"
+                    Point2="41.314287889247,17.7411767194015"
+                    Point3="45.314287889247,17.7411767194015" />
+                  <mssgle:LineSegment
+                    End="75.1285757784941,17.7411767194015" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload to WHOLESALE table\Sales and Stock File">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload to WHOLESALE table\WHOLESALE table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

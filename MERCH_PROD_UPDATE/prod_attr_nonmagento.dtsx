@@ -1,0 +1,1228 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/23/2018 5:03:40 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{3FB43259-9F5C-408E-8858-6372078E295A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="prod_attr_nonmagento"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="51"
+  DTS:VersionGUID="{EBF8E685-36CE-499A-902D-5FDF6162D71F}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[EXCEL_NonMagProductAttr]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{5F0572E4-B538-4DBC-AA30-890C80C462FA}"
+      DTS:ObjectName="EXCEL_NonMagProductAttr">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\FS02-VM-NYC\Baublebar Folders\Merchandising\2. Shiplogs\NonMagento_ProductAttributes.xlsm;Extended Properties=&quot;EXCEL 12.0 MACRO;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8B3C4057-F2CB-41E9-8C48-49CFFB5ABE00}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="filePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\FS02-VM-NYC\Baublebar Folders\Merchandising\Merchandise_Analytics\SHELLS\NonMagento_ProductAttributes_SHELL.xlsm</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Truncate MP Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Clear existing data from the MERCH_PROD table"
+      DTS:DTSID="{90239449-EF06-4F7D-828A-157B340AE597}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate MP Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE merch_prod.dbo.prod_attr_nonmagento" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update MERCH_PROD table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{67AE273F-31E1-4EBC-93B3-3411BE55D1F4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update MERCH_PROD table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="9900"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Update MERCH_PROD table\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true"
+              validateExternalMetadata="False">
+              <inputs>
+                <input
+                  refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[material_1]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="material_1"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_1]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[material_2]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="material_2"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[material_3]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="material_3"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_3]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[material_4]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="material_4"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_4]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[personalized_type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="personalized_type"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[personalized_type]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[sugarfix_dpci]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="sugarfix_dpci"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_dpci]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[sugarfix_tcin]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="sugarfix_tcin"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_tcin]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input].Columns[merch_catalog]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="merch_catalog"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[merch_catalog]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_1]"
+                      name="Copy of material_1"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_1]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_2]"
+                      name="Copy of material_2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_2]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_3]"
+                      name="Copy of material_3"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_3]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_4]"
+                      name="Copy of material_4"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_4]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of personalized_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of personalized_type]"
+                      name="Copy of personalized_type"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[personalized_type]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of sugarfix_dpci]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="11"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of sugarfix_dpci]"
+                      name="Copy of sugarfix_dpci"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_dpci]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of sugarfix_tcin]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of sugarfix_tcin]"
+                      name="Copy of sugarfix_tcin"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_tcin]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of merch_catalog]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of merch_catalog]"
+                      name="Copy of merch_catalog"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[merch_catalog]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update MERCH_PROD table\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Attributes$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM [tblNewAttr]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update MERCH_PROD table\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[EXCEL_NonMagProductAttr]"
+                  connectionManagerRefId="Package.ConnectionManagers[EXCEL_NonMagProductAttr]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output]"
+                  isSorted="true"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[product_id]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[product_id]"
+                      name="product_id"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_1]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_1]"
+                      name="material_1"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_2]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_2]"
+                      name="material_2"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_3]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_3]"
+                      name="material_3"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_4]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[material_4]"
+                      name="material_4"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_delicate]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_delicate]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_delicate]"
+                      name="is_delicate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_builder]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_builder]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_builder]"
+                      name="is_builder"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_adopted]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_adopted]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_adopted]"
+                      name="is_adopted"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[personalized_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[personalized_type]"
+                      length="50"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[personalized_type]"
+                      name="personalized_type"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_dpci]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sugarfix_dpci]"
+                      length="11"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_dpci]"
+                      name="sugarfix_dpci"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_tcin]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sugarfix_tcin]"
+                      length="8"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[sugarfix_tcin]"
+                      name="sugarfix_tcin"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[ecom_launch_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[ecom_launch_date]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[ecom_launch_date]"
+                      name="ecom_launch_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_active_reorder]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_active_reorder]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_active_reorder]"
+                      name="is_active_reorder"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_nord_replen]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_nord_replen]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_nord_replen]"
+                      name="is_nord_replen"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[merch_catalog]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[merch_catalog]"
+                      length="30"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[merch_catalog]"
+                      name="merch_catalog"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[product_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[product_type]"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[product_type]"
+                      name="product_type"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[product_id]"
+                      dataType="r8"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[product_name]"
+                      dataType="wstr"
+                      length="255"
+                      name="product_name" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_1]"
+                      dataType="wstr"
+                      length="255"
+                      name="material_1" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_2]"
+                      dataType="wstr"
+                      length="255"
+                      name="material_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_3]"
+                      dataType="wstr"
+                      length="255"
+                      name="material_3" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[material_4]"
+                      dataType="wstr"
+                      length="255"
+                      name="material_4" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_delicate]"
+                      dataType="wstr"
+                      length="255"
+                      name="is_delicate" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_builder]"
+                      dataType="wstr"
+                      length="255"
+                      name="is_builder" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_adopted]"
+                      dataType="wstr"
+                      length="255"
+                      name="is_adopted" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[personalized_type]"
+                      dataType="wstr"
+                      length="255"
+                      name="personalized_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sugarfix_dpci]"
+                      dataType="wstr"
+                      length="255"
+                      name="sugarfix_dpci" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sugarfix_tcin]"
+                      dataType="wstr"
+                      length="255"
+                      name="sugarfix_tcin" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[ecom_launch_date]"
+                      dataType="wstr"
+                      length="255"
+                      name="ecom_launch_date" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_active_reorder]"
+                      dataType="wstr"
+                      length="255"
+                      name="is_active_reorder" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[is_nord_replen]"
+                      dataType="wstr"
+                      length="255"
+                      name="is_nord_replen" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[merch_catalog]"
+                      dataType="wstr"
+                      length="255"
+                      name="merch_catalog" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].ExternalColumns[product_type]"
+                      dataType="wstr"
+                      length="255"
+                      name="product_type" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[product_id]"
+                      dataType="r8"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[product_id]"
+                      name="product_id" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[product_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[product_type]"
+                      name="product_type" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_1]"
+                      name="material_1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_2]"
+                      name="material_2" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_3]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_3]"
+                      name="material_3" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_4]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[material_4]"
+                      name="material_4" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_delicate]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_delicate]"
+                      name="is_delicate" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_builder]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_builder]"
+                      name="is_builder" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_active_reorder]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_active_reorder]"
+                      name="is_active_reorder" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_nord_replen]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_nord_replen]"
+                      name="is_nord_replen" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_adopted]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[is_adopted]"
+                      name="is_adopted" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[personalized_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[personalized_type]"
+                      name="personalized_type" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[merch_catalog]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[merch_catalog]"
+                      name="merch_catalog" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[sugarfix_dpci]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[sugarfix_dpci]"
+                      name="sugarfix_dpci" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[sugarfix_tcin]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[sugarfix_tcin]"
+                      name="sugarfix_tcin" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[ecom_launch_date]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[ecom_launch_date]"
+                      name="ecom_launch_date" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update MERCH_PROD table\MERCH_PROD table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="MERCH_PROD table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[prod_attr_nonmagento]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,ORDER([product_id]ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update MERCH_PROD table\MERCH_PROD table.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[product_id]"
+                      cachedDataType="i4"
+                      cachedName="product_id"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[product_id]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[is_delicate]"
+                      cachedDataType="bool"
+                      cachedName="is_delicate"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_delicate]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_delicate]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[is_builder]"
+                      cachedDataType="bool"
+                      cachedName="is_builder"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_builder]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_builder]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[is_adopted]"
+                      cachedDataType="bool"
+                      cachedName="is_adopted"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_adopted]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_adopted]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[ecom_launch_date]"
+                      cachedDataType="dbDate"
+                      cachedName="ecom_launch_date"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[ecom_launch_date]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[ecom_launch_date]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[is_nord_replen]"
+                      cachedDataType="bool"
+                      cachedName="is_nord_replen"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_nord_replen]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_nord_replen]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[is_active_reorder]"
+                      cachedDataType="bool"
+                      cachedName="is_active_reorder"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_active_reorder]"
+                      lineageId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output].Columns[is_active_reorder]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of material_1]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of material_1"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_1]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_1]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of material_2]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of material_2"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_2]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_2]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of material_3]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of material_3"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_3]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_3]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of material_4]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of material_4"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_4]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of material_4]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of personalized_type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of personalized_type"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[personalized_type]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of personalized_type]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of merch_catalog]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Copy of merch_catalog"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[merch_catalog]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of merch_catalog]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of sugarfix_dpci]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="Copy of sugarfix_dpci"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[sugarfix_dpci]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of sugarfix_dpci]" />
+                    <inputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].Columns[Copy of sugarfix_tcin]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="Copy of sugarfix_tcin"
+                      externalMetadataColumnId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[sugarfix_tcin]"
+                      lineageId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of sugarfix_tcin]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_1]"
+                      dataType="wstr"
+                      length="50"
+                      name="material_1" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="material_2" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_3]"
+                      dataType="wstr"
+                      length="50"
+                      name="material_3" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[material_4]"
+                      dataType="wstr"
+                      length="50"
+                      name="material_4" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_delicate]"
+                      dataType="bool"
+                      name="is_delicate" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_builder]"
+                      dataType="bool"
+                      name="is_builder" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_active_reorder]"
+                      dataType="bool"
+                      name="is_active_reorder" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_nord_replen]"
+                      dataType="bool"
+                      name="is_nord_replen" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[is_adopted]"
+                      dataType="bool"
+                      name="is_adopted" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[personalized_type]"
+                      dataType="wstr"
+                      length="50"
+                      name="personalized_type" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[merch_catalog]"
+                      dataType="wstr"
+                      length="30"
+                      name="merch_catalog" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[sugarfix_dpci]"
+                      dataType="wstr"
+                      length="11"
+                      name="sugarfix_dpci" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[sugarfix_tcin]"
+                      dataType="wstr"
+                      length="8"
+                      name="sugarfix_tcin" />
+                    <externalMetadataColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input].ExternalColumns[ecom_launch_date]"
+                      dataType="dbDate"
+                      name="ecom_launch_date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update MERCH_PROD table\MERCH_PROD table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update MERCH_PROD table\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update MERCH_PROD table\MERCH_PROD table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update MERCH_PROD table.Paths[Data Conversion Output]"
+              endId="Package\Update MERCH_PROD table\MERCH_PROD table.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Update MERCH_PROD table\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Update MERCH_PROD table.Paths[Excel Source Output]"
+              endId="Package\Update MERCH_PROD table\Data Conversion.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\Update MERCH_PROD table\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1C48222A-443C-4678-A4E6-F0C629EB2635}"
+      DTS:From="Package\Truncate MP Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Update MERCH_PROD table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="130,51"
+          Id="Package\Truncate MP Table"
+          TopLeft="73.7142864344071,33.9647061483258" />
+        <NodeLayout
+          Size="155,47"
+          Id="Package\Update MERCH_PROD table"
+          TopLeft="305.428574951328,65.675630578132" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="203.714286434407,59.4647061483258">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="101.714288516921,29.7109244298062"
+              Start="0,0"
+              End="94.2142885169209,29.7109244298062">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="46.8571442584605,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46.8571442584605,0"
+                    Point2="50.8571442584605,0"
+                    Point3="50.8571442584605,4" />
+                  <mssgle:LineSegment
+                    End="50.8571442584605,25.7109244298062" />
+                  <mssgle:CubicBezierSegment
+                    Point1="50.8571442584605,25.7109244298062"
+                    Point2="50.8571442584605,29.7109244298062"
+                    Point3="54.8571442584605,29.7109244298062" />
+                  <mssgle:LineSegment
+                    End="94.2142885169209,29.7109244298062" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update MERCH_PROD table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Update MERCH_PROD table\MERCH_PROD table"
+          TopLeft="261.371433008934,115.458825176727" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Update MERCH_PROD table\Excel Source"
+          TopLeft="58.428572440634,15.5176472904773" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Update MERCH_PROD table\Data Conversion"
+          TopLeft="305.142862339409,29.3647062941819" />
+        <EdgeLayout
+          Id="Package\Update MERCH_PROD table.Paths[Excel Source Output]"
+          TopLeft="197.428572440634,36.5176472904773">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="107.714289898775,13.8470590037046"
+              Start="0,0"
+              End="100.214289898775,13.8470590037046">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.8571449493875,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="49.8571449493875,0"
+                    Point2="53.8571449493875,0"
+                    Point3="53.8571449493875,4" />
+                  <mssgle:LineSegment
+                    End="53.8571449493875,9.8470590037046" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.8571449493875,9.8470590037046"
+                    Point2="53.8571449493875,13.8470590037046"
+                    Point3="57.8571449493875,13.8470590037046" />
+                  <mssgle:LineSegment
+                    End="100.214289898775,13.8470590037046" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Update MERCH_PROD table.Paths[Data Conversion Output]"
+          TopLeft="382.642862339409,71.3647062941819">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-34.771429330475,44.0941188825451"
+              Start="0,0"
+              End="-34.771429330475,36.5941188825451">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.0470594412726" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.0470594412726"
+                    Point2="0,22.0470594412726"
+                    Point3="-4,22.0470594412726" />
+                  <mssgle:LineSegment
+                    End="-30.771429330475,22.0470594412726" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30.771429330475,22.0470594412726"
+                    Point2="-34.771429330475,22.0470594412726"
+                    Point3="-34.771429330475,26.0470594412726" />
+                  <mssgle:LineSegment
+                    End="-34.771429330475,36.5941188825451" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update MERCH_PROD table\MERCH_PROD table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update MERCH_PROD table\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

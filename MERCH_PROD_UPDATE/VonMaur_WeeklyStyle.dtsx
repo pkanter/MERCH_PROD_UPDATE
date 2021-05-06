@@ -1,0 +1,879 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/3/2018 10:33:47 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{5371313D-0D4E-48CC-9496-640138F184FA}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="VonMaur_WeeklyStyle"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{C0EF6610-7CC6-42E3-99B0-B13A27C4696B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[VonMaur_WeeklyStyleSales]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{2BE45F22-2B23-4DD1-9F2A-6DA01672221C}"
+      DTS:ObjectName="VonMaur_WeeklyStyleSales">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\FS02-VM-NYC\Baublebar Folders\Merchandising\Merchandise_Analytics\RetailSales\VonMaur\vonmaur_weekly_sales_data.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clear existing data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Truncate existing VonMaur sales table"
+      DTS:DTSID="{CBC252FE-0BA0-424C-89A3-058C36150439}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear existing data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{682B6256-E787-49CA-8259-C76570AFE216}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE wholesale.dbo.vonmaur_rtl_sales_stock_week" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Wholesale Table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{1AA49D5E-0137-4F53-B1EC-2A36D2CF04E9}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Wholesale Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Update Wholesale Table\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">weekly_data$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Wholesale Table\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[VonMaur_WeeklyStyleSales]"
+                  connectionManagerRefId="Package.ConnectionManagers[VonMaur_WeeklyStyleSales]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output]"
+                  isSorted="true"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_yr]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rtl_yr]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_yr]"
+                      name="rtl_yr"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_pd]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rtl_pd]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_pd]"
+                      name="rtl_pd"
+                      sortKeyPosition="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_wk]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rtl_wk]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_wk]"
+                      name="rtl_wk"
+                      sortKeyPosition="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rpmd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rpmd]"
+                      length="2"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rpmd]"
+                      name="rpmd"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[grp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[grp]"
+                      length="5"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[grp]"
+                      name="grp"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[cls]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[cls]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[cls]"
+                      name="cls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[bb_product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[bb_product_id]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[bb_product_id]"
+                      name="bb_product_id"
+                      sortKeyPosition="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_rp]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[slsu_rp]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_rp]"
+                      name="slsu_rp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_md]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[slsu_md]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_md]"
+                      name="slsu_md"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_ttl]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[slsu_ttl]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_ttl]"
+                      name="slsu_ttl"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_rp]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sls_amt_rp]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_rp]"
+                      name="sls_amt_rp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_md]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sls_amt_md]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_md]"
+                      name="sls_amt_md"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_ttl]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sls_amt_ttl]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_ttl]"
+                      name="sls_amt_ttl"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[ohu]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[ohu]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[ohu]"
+                      name="ohu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[oh_amt]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[oh_amt]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[oh_amt]"
+                      name="oh_amt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[wks_on_flr]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[wks_on_flr]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[wks_on_flr]"
+                      name="wks_on_flr"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rtl_yr]"
+                      dataType="r8"
+                      name="rtl_yr" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rtl_pd]"
+                      dataType="r8"
+                      name="rtl_pd" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rtl_wk]"
+                      dataType="r8"
+                      name="rtl_wk" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[rpmd]"
+                      dataType="wstr"
+                      length="255"
+                      name="rpmd" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[grp]"
+                      dataType="wstr"
+                      length="255"
+                      name="grp" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[cls]"
+                      dataType="r8"
+                      name="cls" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[bb_product_id]"
+                      dataType="r8"
+                      name="bb_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[slsu_rp]"
+                      dataType="r8"
+                      name="slsu_rp" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[slsu_md]"
+                      dataType="r8"
+                      name="slsu_md" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[slsu_ttl]"
+                      dataType="r8"
+                      name="slsu_ttl" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sls_amt_rp]"
+                      dataType="r8"
+                      name="sls_amt_rp" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sls_amt_md]"
+                      dataType="r8"
+                      name="sls_amt_md" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[sls_amt_ttl]"
+                      dataType="r8"
+                      name="sls_amt_ttl" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[ohu]"
+                      dataType="r8"
+                      name="ohu" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[oh_amt]"
+                      dataType="r8"
+                      name="oh_amt" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[wks_on_flr]"
+                      dataType="r8"
+                      name="wks_on_flr" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rtl_yr]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rtl_yr]"
+                      name="rtl_yr" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rtl_pd]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rtl_pd]"
+                      name="rtl_pd" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rtl_wk]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rtl_wk]"
+                      name="rtl_wk" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rpmd]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[rpmd]"
+                      name="rpmd" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[grp]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[grp]"
+                      name="grp" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[cls]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[cls]"
+                      name="cls" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[bb_product_id]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[bb_product_id]"
+                      name="bb_product_id" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[slsu_rp]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[slsu_rp]"
+                      name="slsu_rp" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[slsu_md]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[slsu_md]"
+                      name="slsu_md" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[slsu_ttl]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[slsu_ttl]"
+                      name="slsu_ttl" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[sls_amt_rp]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[sls_amt_rp]"
+                      name="sls_amt_rp" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[sls_amt_md]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[sls_amt_md]"
+                      name="sls_amt_md" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[sls_amt_ttl]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[sls_amt_ttl]"
+                      name="sls_amt_ttl" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[ohu]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[ohu]"
+                      name="ohu" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[oh_amt]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[oh_amt]"
+                      name="oh_amt" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[wks_on_flr]"
+                      dataType="r8"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[wks_on_flr]"
+                      name="wks_on_flr" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Wholesale Table\VonMaur Sales Table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="VonMaur Sales Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[vonmaur_rtl_sales_stock_week]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Wholesale Table\VonMaur Sales Table.Connections[OleDbConnection]"
+                  connectionManagerID="{682B6256-E787-49CA-8259-C76570AFE216}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[WHOLESALE]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[rtl_yr]"
+                      cachedDataType="r8"
+                      cachedName="rtl_yr"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_yr]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_yr]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[rtl_pd]"
+                      cachedDataType="r8"
+                      cachedName="rtl_pd"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_pd]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_pd]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[rtl_wk]"
+                      cachedDataType="r8"
+                      cachedName="rtl_wk"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_wk]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rtl_wk]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[rpmd]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="rpmd"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rpmd]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[rpmd]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[grp]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="grp"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[grp]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[grp]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[cls]"
+                      cachedDataType="r8"
+                      cachedName="cls"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[cls]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[cls]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[bb_product_id]"
+                      cachedDataType="i4"
+                      cachedName="bb_product_id"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[bb_product_id]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[bb_product_id]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[slsu_rp]"
+                      cachedDataType="r8"
+                      cachedName="slsu_rp"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[slsu_rp]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_rp]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[slsu_md]"
+                      cachedDataType="r8"
+                      cachedName="slsu_md"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[slsu_md]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_md]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[slsu_ttl]"
+                      cachedDataType="r8"
+                      cachedName="slsu_ttl"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[slsu_ttl]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[slsu_ttl]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[sls_amt_rp]"
+                      cachedDataType="r8"
+                      cachedName="sls_amt_rp"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt_rp]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_rp]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[sls_amt_md]"
+                      cachedDataType="r8"
+                      cachedName="sls_amt_md"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt_md]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_md]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[sls_amt_ttl]"
+                      cachedDataType="r8"
+                      cachedName="sls_amt_ttl"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt_ttl]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[sls_amt_ttl]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[ohu]"
+                      cachedDataType="r8"
+                      cachedName="ohu"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[ohu]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[ohu]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[oh_amt]"
+                      cachedDataType="r8"
+                      cachedName="oh_amt"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[oh_amt]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[oh_amt]" />
+                    <inputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].Columns[wks_on_flr]"
+                      cachedDataType="r8"
+                      cachedName="wks_on_flr"
+                      externalMetadataColumnId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[wks_on_flr]"
+                      lineageId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output].Columns[wks_on_flr]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_yr]"
+                      dataType="i4"
+                      name="rtl_yr" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_pd]"
+                      dataType="i4"
+                      name="rtl_pd" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rtl_wk]"
+                      dataType="i4"
+                      name="rtl_wk" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[rpmd]"
+                      dataType="wstr"
+                      length="2"
+                      name="rpmd" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[grp]"
+                      dataType="wstr"
+                      length="5"
+                      name="grp" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[cls]"
+                      dataType="i4"
+                      name="cls" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[bb_product_id]"
+                      dataType="i4"
+                      name="bb_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[slsu_rp]"
+                      dataType="i4"
+                      name="slsu_rp" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[slsu_md]"
+                      dataType="i4"
+                      name="slsu_md" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[slsu_ttl]"
+                      dataType="i4"
+                      name="slsu_ttl" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt_rp]"
+                      dataType="numeric"
+                      name="sls_amt_rp"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt_md]"
+                      dataType="numeric"
+                      name="sls_amt_md"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[sls_amt_ttl]"
+                      dataType="numeric"
+                      name="sls_amt_ttl"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[ohu]"
+                      dataType="i4"
+                      name="ohu" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[oh_amt]"
+                      dataType="numeric"
+                      name="oh_amt"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input].ExternalColumns[wks_on_flr]"
+                      dataType="i4"
+                      name="wks_on_flr" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Wholesale Table\VonMaur Sales Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Wholesale Table\VonMaur Sales Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Wholesale Table\VonMaur Sales Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Wholesale Table\VonMaur Sales Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update Wholesale Table.Paths[Excel Source Output]"
+              endId="Package\Update Wholesale Table\VonMaur Sales Table.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Update Wholesale Table\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{38C28667-6024-44B2-ADF1-ACAB92312B1C}"
+      DTS:From="Package\Clear existing data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Update Wholesale Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="166.4,41.6"
+          Id="Package\Clear existing data"
+          TopLeft="60.5714296029539,36.7058828677273" />
+        <NodeLayout
+          Size="192,41.6"
+          Id="Package\Update Wholesale Table"
+          TopLeft="272.000004632132,46.4941182991213" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="226.971429602954,57.5058828677273">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45.0285750291786,9.78823543139393"
+              Start="0,0"
+              End="37.5285750291786,9.78823543139393">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="18.5142875145893,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.5142875145893,0"
+                    Point2="22.5142875145893,0"
+                    Point3="22.5142875145893,4" />
+                  <mssgle:LineSegment
+                    End="22.5142875145893,5.78823543139393" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.5142875145893,5.78823543139393"
+                    Point2="22.5142875145893,9.78823543139393"
+                    Point3="26.5142875145893,9.78823543139393" />
+                  <mssgle:LineSegment
+                    End="37.5285750291786,9.78823543139393" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update Wholesale Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="139.2,41.6"
+          Id="Package\Update Wholesale Table\Excel Source"
+          TopLeft="80.5714299435518,22.0235297206364" />
+        <NodeLayout
+          Size="177.6,41.6"
+          Id="Package\Update Wholesale Table\VonMaur Sales Table"
+          TopLeft="282.285719093011,91.7647071693181" />
+        <EdgeLayout
+          Id="Package\Update Wholesale Table.Paths[Excel Source Output]"
+          TopLeft="150.171429943552,63.6235297206364">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="220.914289149459,28.1411774486817"
+              Start="0,0"
+              End="220.914289149459,20.6411774486817">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.0705887243409" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.0705887243409"
+                    Point2="0,14.0705887243409"
+                    Point3="4,14.0705887243409" />
+                  <mssgle:LineSegment
+                    End="216.914289149459,14.0705887243409" />
+                  <mssgle:CubicBezierSegment
+                    Point1="216.914289149459,14.0705887243409"
+                    Point2="220.914289149459,14.0705887243409"
+                    Point3="220.914289149459,18.0705887243409" />
+                  <mssgle:LineSegment
+                    End="220.914289149459,20.6411774486817" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update Wholesale Table\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update Wholesale Table\VonMaur Sales Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

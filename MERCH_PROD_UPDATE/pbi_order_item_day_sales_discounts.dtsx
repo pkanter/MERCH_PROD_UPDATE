@@ -1,0 +1,2032 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/30/2018 1:43:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{2D0D0A34-83F9-43D6-8E81-49AAD28529D4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="pbi_order_item_day_sales_discounts"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{24C68572-DCA1-4417-B2CB-5BA6FB0B113D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\INSERT into FINANCE table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A23A2C65-279B-40B3-A2CC-85559E9B09A4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="INSERT into FINANCE table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="54000"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\INSERT into FINANCE table\FINANCE table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="FINANCE table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[pbi_order_item_sale_discount_day]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,ORDER([greg_date] ASC,[dw_order_item_id] ASC,[ops_order_item_id] ASC,[dw_parent_order_item_id] ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT into FINANCE table\FINANCE table.Connections[OleDbConnection]"
+                  connectionManagerID="{9DE3A53C-A772-492B-A882-E720BC31034C}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[FINANCE]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[greg_date]"
+                      cachedDataType="dbDate"
+                      cachedName="greg_date"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[greg_date]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[greg_date]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[dw_order_item_id]"
+                      cachedDataType="numeric"
+                      cachedName="dw_order_item_id"
+                      cachedPrecision="19"
+                      cachedScale="3"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[dw_order_item_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[dw_order_item_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ops_order_item_id]"
+                      cachedDataType="i4"
+                      cachedName="ops_order_item_id"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ops_order_item_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_order_item_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[dw_parent_order_item_id]"
+                      cachedDataType="numeric"
+                      cachedName="dw_parent_order_item_id"
+                      cachedPrecision="19"
+                      cachedScale="3"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[dw_parent_order_item_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[dw_parent_order_item_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[order_created_date]"
+                      cachedDataType="dbDate"
+                      cachedName="order_created_date"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[order_created_date]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[order_created_date]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[display_order_id]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="display_order_id"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[display_order_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[display_order_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ops_order_id]"
+                      cachedDataType="i4"
+                      cachedName="ops_order_id"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ops_order_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_order_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ops_group_order_id]"
+                      cachedDataType="i4"
+                      cachedName="ops_group_order_id"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ops_group_order_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_group_order_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[coupon_rule_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="coupon_rule_name"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[coupon_rule_name]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[coupon_rule_name]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[coupon_code]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="coupon_code"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[coupon_code]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[coupon_code]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[discount_description]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="discount_description"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[discount_description]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[discount_description]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[parent_product_id]"
+                      cachedDataType="i4"
+                      cachedName="parent_product_id"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[parent_product_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[parent_product_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[product_id]"
+                      cachedDataType="i4"
+                      cachedName="product_id"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[product_id]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[default_channel_grouping]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="default_channel_grouping"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[default_channel_grouping]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[default_channel_grouping]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[medium]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="medium"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[medium]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[medium]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[source]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="source"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[source]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[channel_medium_source]"
+                      cachedDataType="wstr"
+                      cachedLength="300"
+                      cachedName="channel_medium_source"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[channel_medium_source]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[channel_medium_source]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[date_channel_medium_source]"
+                      cachedDataType="wstr"
+                      cachedLength="308"
+                      cachedName="date_channel_medium_source"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[date_channel_medium_source]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[date_channel_medium_source]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_gross_sales]"
+                      cachedDataType="numeric"
+                      cachedName="ord_gross_sales"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_gross_sales]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_gross_sales]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_gross_sales]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_gross_sales"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_gross_sales]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_gross_sales]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[adj_gross_sales]"
+                      cachedDataType="numeric"
+                      cachedName="adj_gross_sales"
+                      cachedPrecision="20"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_gross_sales]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_gross_sales]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_md_disc]"
+                      cachedDataType="numeric"
+                      cachedName="ord_md_disc"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_md_disc]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_md_disc]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_md_disc]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_md_disc"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_md_disc]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_md_disc]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[adj_md_disc]"
+                      cachedDataType="numeric"
+                      cachedName="adj_md_disc"
+                      cachedPrecision="20"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_md_disc]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_md_disc]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_base_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_base_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_base_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_base_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_base_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_base_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[adj_base_amt]"
+                      cachedDataType="numeric"
+                      cachedName="adj_base_amt"
+                      cachedPrecision="20"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_base_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_coupon_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_coupon_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[adj_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="adj_coupon_amt"
+                      cachedPrecision="20"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_reward_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_reward_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_reward_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_reward_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[adj_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="adj_reward_amt"
+                      cachedPrecision="20"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_reward_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_sls_amt]"
+                      cachedDataType="numeric"
+                      cachedName="ord_sls_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_sls_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_sls_amt]"
+                      cachedDataType="numeric"
+                      cachedName="cxl_sls_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_sls_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[rtn_sls_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_sls_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_sls_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[net_sls_amt]"
+                      cachedDataType="numeric"
+                      cachedName="net_sls_amt"
+                      cachedPrecision="21"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[net_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[net_sls_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[rtn_initial_price_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_initial_price_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_initial_price_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_initial_price_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[rtn_coupon_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_coupon_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_coupon_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[rtn_base_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_base_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_base_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[rtn_reward_amt]"
+                      cachedDataType="numeric"
+                      cachedName="rtn_reward_amt"
+                      cachedPrecision="19"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_reward_amt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_cnt]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_cnt"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_cnt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_cnt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[ord_u_cnt]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_u_cnt"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_u_cnt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_u_cnt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[cxl_u_cnt]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxl_u_cnt"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_u_cnt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_u_cnt]" />
+                    <inputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].Columns[rtn_u_cnt]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtn_u_cnt"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_u_cnt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_u_cnt]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[greg_date]"
+                      dataType="dbDate"
+                      name="greg_date" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[dw_order_item_id]"
+                      dataType="numeric"
+                      name="dw_order_item_id"
+                      precision="19"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ops_order_item_id]"
+                      dataType="i4"
+                      name="ops_order_item_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[dw_parent_order_item_id]"
+                      dataType="numeric"
+                      name="dw_parent_order_item_id"
+                      precision="19"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[order_created_date]"
+                      dataType="dbDate"
+                      name="order_created_date" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[display_order_id]"
+                      dataType="wstr"
+                      length="200"
+                      name="display_order_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ops_order_id]"
+                      dataType="i4"
+                      name="ops_order_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ops_group_order_id]"
+                      dataType="i4"
+                      name="ops_group_order_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[coupon_rule_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="coupon_rule_name" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[coupon_code]"
+                      dataType="wstr"
+                      length="200"
+                      name="coupon_code" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[discount_description]"
+                      dataType="wstr"
+                      length="200"
+                      name="discount_description" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[parent_product_id]"
+                      dataType="i4"
+                      name="parent_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_gross_sales]"
+                      dataType="numeric"
+                      name="ord_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_gross_sales]"
+                      dataType="numeric"
+                      name="cxl_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_gross_sales]"
+                      dataType="numeric"
+                      name="adj_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_md_disc]"
+                      dataType="numeric"
+                      name="ord_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_md_disc]"
+                      dataType="numeric"
+                      name="cxl_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_md_disc]"
+                      dataType="numeric"
+                      name="adj_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_base_amt]"
+                      dataType="numeric"
+                      name="ord_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_base_amt]"
+                      dataType="numeric"
+                      name="cxl_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_base_amt]"
+                      dataType="numeric"
+                      name="adj_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_coupon_amt]"
+                      dataType="numeric"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_coupon_amt]"
+                      dataType="numeric"
+                      name="adj_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_reward_amt]"
+                      dataType="numeric"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_reward_amt]"
+                      dataType="numeric"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[adj_reward_amt]"
+                      dataType="numeric"
+                      name="adj_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_sls_amt]"
+                      dataType="numeric"
+                      name="ord_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_sls_amt]"
+                      dataType="numeric"
+                      name="cxl_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_sls_amt]"
+                      dataType="numeric"
+                      name="rtn_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[net_sls_amt]"
+                      dataType="numeric"
+                      name="net_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_base_amt]"
+                      dataType="numeric"
+                      name="rtn_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[default_channel_grouping]"
+                      dataType="wstr"
+                      length="100"
+                      name="default_channel_grouping" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[medium]"
+                      dataType="wstr"
+                      length="100"
+                      name="medium" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="100"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[channel_medium_source]"
+                      dataType="wstr"
+                      length="300"
+                      name="channel_medium_source" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[date_channel_medium_source]"
+                      dataType="wstr"
+                      length="308"
+                      name="date_channel_medium_source" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_reward_amt]"
+                      dataType="numeric"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="ord_cnt" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[ord_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="ord_u_cnt" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[cxl_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="cxl_u_cnt" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input].ExternalColumns[rtn_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="rtn_u_cnt" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\INSERT into FINANCE table\FINANCE table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\FINANCE table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\FINANCE table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\FINANCE table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\INSERT into FINANCE table\STAGING table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STAGING table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+CONVERT(DATE, poisddr.greg_date,23)  AS greg_date,
+CONVERT(NUMERIC(19,3), poisddr.dw_order_item_id) AS dw_order_item_id,
+CONVERT(INT, poisddr.ops_order_item_id) AS ops_order_item_id,
+CONVERT(NUMERIC(19,3), poisddr.dw_parent_order_item_id) AS dw_parent_order_item_id,
+CONVERT(DATE, poisddr.order_created_date,23) order_created_date,
+CONVERT(NVARCHAR(200),display_order_id) AS display_order_id,
+CONVERT(INT, ops_order_id) AS ops_order_id,
+CONVERT(INT, ops_group_order_id) AS ops_group_order_id,
+NULLIF(poisddr.coupon_rule_name,'') AS coupon_rule_name,
+NULLIF(poisddr.coupon_code,'') AS coupon_code,
+NULLIF(poisddr.discount_description,'') AS discount_description,
+NULLIF(CONVERT(INT,poisddr.parent_product_id),0) AS parent_product_id,
+CONVERT(INT,poisddr.product_id) AS product_id,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_gross_sales,0)) AS ord_gross_sales,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_gross_sales,0)) AS cxl_gross_sales,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_gross_sales,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_gross_sales,0)) AS adj_gross_sales,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_md_disc,0)) AS ord_md_disc,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_md_disc,0)) AS cxl_md_disc,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_md_disc,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_md_disc,0)) AS adj_md_disc,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_base_amt,0)) AS ord_base_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_base_amt,0)) AS cxl_base_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_base_amt,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_base_amt,0)) AS adj_base_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_coupon_amt,0))  AS ord_coupon_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_coupon_amt,0))  AS cxl_coupon_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_coupon_amt,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_coupon_amt,0)) AS adj_coupon_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_reward_amt,0))  AS ord_reward_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_reward_amt,0))  AS cxl_reward_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_reward_amt,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_reward_amt,0)) AS adj_reward_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_sls_amt,0)) AS ord_sls_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_sls_amt,0)) AS cxl_sls_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.rtn_sls_amt,0)) AS rtn_sls_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.ord_sls_amt,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.cxl_sls_amt,0)) - CONVERT(NUMERIC(19,7), ISNULL(poisddr.rtn_sls_amt,0)) AS net_sls_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.rtn_initial_price_amt,0))  AS rtn_initial_price_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.rtn_base_amt,0))  AS rtn_base_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.rtn_coupon_amt,0))  AS rtn_coupon_amt,
+CONVERT(NUMERIC(19,7), ISNULL(poisddr.rtn_reward_amt,0))  AS rtn_reward_amt,
+COALESCE(gots.default_channel_grouping,'na') AS default_channel_grouping,
+COALESCE(gots.medium,'na') AS medium,
+COALESCE(gots.source,'na') AS source,
+CONCAT(LOWER(LTRIM(RTRIM(COALESCE(gots.default_channel_grouping,'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.medium,'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.source,'na'))))) AS channel_medium_source,
+CONCAT(CONVERT(NVARCHAR(8),CAST(poisddr.greg_date AS DATE),112),LOWER(LTRIM(RTRIM(COALESCE(gots.default_channel_grouping,'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.medium,'na')))),LOWER(LTRIM(RTRIM(COALESCE(gots.source,'na'))))) AS date_channel_medium_source,
+poisddr.ord_cnt AS ord_cnt,
+poisddr.ord_u_cnt AS ord_u_cnt,
+poisddr.cxl_u_cnt AS cxl_u_cnt,
+poisddr.rtn_u_cnt AS rtn_u_cnt
+FROM staging.dbo.pbi_order_item_sale_discount_day_raw AS poisddr
+LEFT OUTER JOIN finance.dbo.ga_order_traffic_source AS gots ON poisddr.greg_date = gots.greg_date AND poisddr.display_order_id = gots.order_id
+ORDER BY 
+CONVERT(DATE, poisddr.greg_date,23),
+CONVERT(NUMERIC(19,3), poisddr.dw_order_item_id),
+CONVERT(INT, poisddr.ops_order_item_id),
+CONVERT(NUMERIC(19,3), poisddr.dw_parent_order_item_id)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\INSERT into FINANCE table\STAGING table.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[greg_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[greg_date]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[greg_date]"
+                      name="greg_date"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[dw_order_item_id]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[dw_order_item_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[dw_order_item_id]"
+                      name="dw_order_item_id"
+                      precision="19"
+                      scale="3"
+                      sortKeyPosition="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_order_item_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ops_order_item_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_order_item_id]"
+                      name="ops_order_item_id"
+                      sortKeyPosition="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[dw_parent_order_item_id]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[dw_parent_order_item_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[dw_parent_order_item_id]"
+                      name="dw_parent_order_item_id"
+                      precision="19"
+                      scale="3"
+                      sortKeyPosition="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[order_created_date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[order_created_date]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[order_created_date]"
+                      name="order_created_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[display_order_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[display_order_id]"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[display_order_id]"
+                      name="display_order_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_order_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ops_order_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_order_id]"
+                      name="ops_order_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_group_order_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ops_group_order_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ops_group_order_id]"
+                      name="ops_group_order_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[coupon_rule_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[coupon_rule_name]"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[coupon_rule_name]"
+                      name="coupon_rule_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[coupon_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[coupon_code]"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[coupon_code]"
+                      name="coupon_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[discount_description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[discount_description]"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[discount_description]"
+                      name="discount_description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[parent_product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[parent_product_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[parent_product_id]"
+                      name="parent_product_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[product_id]"
+                      name="product_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[default_channel_grouping]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[default_channel_grouping]"
+                      length="100"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[default_channel_grouping]"
+                      name="default_channel_grouping"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[medium]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[medium]"
+                      length="100"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[medium]"
+                      name="medium"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      length="100"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[source]"
+                      name="source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[channel_medium_source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[channel_medium_source]"
+                      length="300"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[channel_medium_source]"
+                      name="channel_medium_source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[date_channel_medium_source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[date_channel_medium_source]"
+                      length="308"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[date_channel_medium_source]"
+                      name="date_channel_medium_source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_gross_sales]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_gross_sales]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_gross_sales]"
+                      name="ord_gross_sales"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_gross_sales]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_gross_sales]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_gross_sales]"
+                      name="cxl_gross_sales"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_gross_sales]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_gross_sales]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_gross_sales]"
+                      name="adj_gross_sales"
+                      precision="20"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_md_disc]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_md_disc]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_md_disc]"
+                      name="ord_md_disc"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_md_disc]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_md_disc]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_md_disc]"
+                      name="cxl_md_disc"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_md_disc]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_md_disc]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_md_disc]"
+                      name="adj_md_disc"
+                      precision="20"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_base_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_base_amt]"
+                      name="ord_base_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_base_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_base_amt]"
+                      name="cxl_base_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_base_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_base_amt]"
+                      name="adj_base_amt"
+                      precision="20"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_coupon_amt]"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_coupon_amt]"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_coupon_amt]"
+                      name="adj_coupon_amt"
+                      precision="20"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_reward_amt]"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_reward_amt]"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[adj_reward_amt]"
+                      name="adj_reward_amt"
+                      precision="20"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_sls_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_sls_amt]"
+                      name="ord_sls_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_sls_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_sls_amt]"
+                      name="cxl_sls_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_sls_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_sls_amt]"
+                      name="rtn_sls_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[net_sls_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[net_sls_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[net_sls_amt]"
+                      name="net_sls_amt"
+                      precision="21"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_initial_price_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_initial_price_amt]"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_coupon_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_coupon_amt]"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_reward_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_reward_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_reward_amt]"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_base_amt]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_base_amt]"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_base_amt]"
+                      name="rtn_base_amt"
+                      precision="19"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_cnt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_cnt]"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_cnt]"
+                      name="ord_cnt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_u_cnt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_u_cnt]"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[ord_u_cnt]"
+                      name="ord_u_cnt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_u_cnt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_u_cnt]"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[cxl_u_cnt]"
+                      name="cxl_u_cnt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_u_cnt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_u_cnt]"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].Columns[rtn_u_cnt]"
+                      name="rtn_u_cnt"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[greg_date]"
+                      dataType="dbDate"
+                      name="greg_date" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[dw_order_item_id]"
+                      dataType="numeric"
+                      name="dw_order_item_id"
+                      precision="19"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ops_order_item_id]"
+                      dataType="i4"
+                      name="ops_order_item_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[dw_parent_order_item_id]"
+                      dataType="numeric"
+                      name="dw_parent_order_item_id"
+                      precision="19"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[order_created_date]"
+                      dataType="dbDate"
+                      name="order_created_date" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[display_order_id]"
+                      dataType="wstr"
+                      length="200"
+                      name="display_order_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ops_order_id]"
+                      dataType="i4"
+                      name="ops_order_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ops_group_order_id]"
+                      dataType="i4"
+                      name="ops_group_order_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[coupon_rule_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="coupon_rule_name" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[coupon_code]"
+                      dataType="wstr"
+                      length="200"
+                      name="coupon_code" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[discount_description]"
+                      dataType="wstr"
+                      length="200"
+                      name="discount_description" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[parent_product_id]"
+                      dataType="i4"
+                      name="parent_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[default_channel_grouping]"
+                      dataType="wstr"
+                      length="100"
+                      name="default_channel_grouping" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[medium]"
+                      dataType="wstr"
+                      length="100"
+                      name="medium" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="100"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[channel_medium_source]"
+                      dataType="wstr"
+                      length="300"
+                      name="channel_medium_source" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[date_channel_medium_source]"
+                      dataType="wstr"
+                      length="308"
+                      name="date_channel_medium_source" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_gross_sales]"
+                      dataType="numeric"
+                      name="ord_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_gross_sales]"
+                      dataType="numeric"
+                      name="cxl_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_gross_sales]"
+                      dataType="numeric"
+                      name="adj_gross_sales"
+                      precision="20"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_md_disc]"
+                      dataType="numeric"
+                      name="ord_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_md_disc]"
+                      dataType="numeric"
+                      name="cxl_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_md_disc]"
+                      dataType="numeric"
+                      name="adj_md_disc"
+                      precision="20"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_base_amt]"
+                      dataType="numeric"
+                      name="ord_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_base_amt]"
+                      dataType="numeric"
+                      name="cxl_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_base_amt]"
+                      dataType="numeric"
+                      name="adj_base_amt"
+                      precision="20"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_coupon_amt]"
+                      dataType="numeric"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_coupon_amt]"
+                      dataType="numeric"
+                      name="adj_coupon_amt"
+                      precision="20"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_reward_amt]"
+                      dataType="numeric"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_reward_amt]"
+                      dataType="numeric"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[adj_reward_amt]"
+                      dataType="numeric"
+                      name="adj_reward_amt"
+                      precision="20"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_sls_amt]"
+                      dataType="numeric"
+                      name="ord_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_sls_amt]"
+                      dataType="numeric"
+                      name="cxl_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_sls_amt]"
+                      dataType="numeric"
+                      name="rtn_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[net_sls_amt]"
+                      dataType="numeric"
+                      name="net_sls_amt"
+                      precision="21"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_reward_amt]"
+                      dataType="numeric"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_base_amt]"
+                      dataType="numeric"
+                      name="rtn_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="ord_cnt" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[ord_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="ord_u_cnt" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[cxl_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="cxl_u_cnt" />
+                    <externalMetadataColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output].ExternalColumns[rtn_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      name="rtn_u_cnt" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[greg_date]"
+                      dataType="dbDate"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[greg_date]"
+                      name="greg_date" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[dw_order_item_id]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[dw_order_item_id]"
+                      name="dw_order_item_id"
+                      precision="19"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ops_order_item_id]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ops_order_item_id]"
+                      name="ops_order_item_id" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[dw_parent_order_item_id]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[dw_parent_order_item_id]"
+                      name="dw_parent_order_item_id"
+                      precision="19"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[order_created_date]"
+                      dataType="dbDate"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[order_created_date]"
+                      name="order_created_date" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[display_order_id]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[display_order_id]"
+                      name="display_order_id" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ops_order_id]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ops_order_id]"
+                      name="ops_order_id" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ops_group_order_id]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ops_group_order_id]"
+                      name="ops_group_order_id" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[coupon_rule_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[coupon_rule_name]"
+                      name="coupon_rule_name" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[coupon_code]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[coupon_code]"
+                      name="coupon_code" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[discount_description]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[discount_description]"
+                      name="discount_description" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[parent_product_id]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[parent_product_id]"
+                      name="parent_product_id" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      name="product_id" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_gross_sales]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_gross_sales]"
+                      name="ord_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_gross_sales]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_gross_sales]"
+                      name="cxl_gross_sales"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_gross_sales]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_gross_sales]"
+                      name="adj_gross_sales"
+                      precision="20"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_md_disc]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_md_disc]"
+                      name="ord_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_md_disc]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_md_disc]"
+                      name="cxl_md_disc"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_md_disc]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_md_disc]"
+                      name="adj_md_disc"
+                      precision="20"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_base_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_base_amt]"
+                      name="ord_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_base_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_base_amt]"
+                      name="cxl_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_base_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_base_amt]"
+                      name="adj_base_amt"
+                      precision="20"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_coupon_amt]"
+                      name="ord_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_coupon_amt]"
+                      name="cxl_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_coupon_amt]"
+                      name="adj_coupon_amt"
+                      precision="20"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_reward_amt]"
+                      name="ord_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_reward_amt]"
+                      name="cxl_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[adj_reward_amt]"
+                      name="adj_reward_amt"
+                      precision="20"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_sls_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_sls_amt]"
+                      name="ord_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_sls_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_sls_amt]"
+                      name="cxl_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_sls_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_sls_amt]"
+                      name="rtn_sls_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[net_sls_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[net_sls_amt]"
+                      name="net_sls_amt"
+                      precision="21"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_initial_price_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_initial_price_amt]"
+                      name="rtn_initial_price_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_base_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_base_amt]"
+                      name="rtn_base_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_coupon_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_coupon_amt]"
+                      name="rtn_coupon_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_reward_amt]"
+                      dataType="numeric"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_reward_amt]"
+                      name="rtn_reward_amt"
+                      precision="19"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[default_channel_grouping]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[default_channel_grouping]"
+                      name="default_channel_grouping" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[medium]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[medium]"
+                      name="medium" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[source]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[source]"
+                      name="source" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[channel_medium_source]"
+                      dataType="wstr"
+                      length="300"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[channel_medium_source]"
+                      name="channel_medium_source" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[date_channel_medium_source]"
+                      dataType="wstr"
+                      length="308"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[date_channel_medium_source]"
+                      name="date_channel_medium_source" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_cnt]"
+                      name="ord_cnt" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ord_u_cnt]"
+                      name="ord_u_cnt" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[cxl_u_cnt]"
+                      name="cxl_u_cnt" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_u_cnt]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[rtn_u_cnt]"
+                      name="rtn_u_cnt" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\INSERT into FINANCE table.Paths[OLE DB Source Output]"
+              endId="Package\INSERT into FINANCE table\FINANCE table.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\INSERT into FINANCE table\STAGING table.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate FINANCE table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8E9D9F9D-4646-4AB4-A77E-A80EA17F4F30}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate FINANCE table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DE3A53C-A772-492B-A882-E720BC31034C}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE finance.dbo.pbi_order_item_sale_discount_day" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4D7C26E7-1B62-40E6-81C5-27D786FBA0A4}"
+      DTS:From="Package\Truncate FINANCE table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\INSERT into FINANCE table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="208,42"
+          Id="Package\INSERT into FINANCE table"
+          TopLeft="350,104" />
+        <NodeLayout
+          Size="193,42"
+          Id="Package\Truncate FINANCE table"
+          TopLeft="62,42" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="255,63">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="95,62"
+              Start="0,0"
+              End="87.5,62">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="43.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="43.5,0"
+                    Point2="47.5,0"
+                    Point3="47.5,4" />
+                  <mssgle:LineSegment
+                    End="47.5,58" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47.5,58"
+                    Point2="47.5,62"
+                    Point3="51.5,62" />
+                  <mssgle:LineSegment
+                    End="87.5,62" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\INSERT into FINANCE table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="149,42"
+          Id="Package\INSERT into FINANCE table\STAGING table"
+          TopLeft="101,29" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\INSERT into FINANCE table\FINANCE table"
+          TopLeft="391,71" />
+        <EdgeLayout
+          Id="Package\INSERT into FINANCE table.Paths[OLE DB Source Output]"
+          TopLeft="250,50">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="141,42"
+              Start="0,0"
+              End="133.5,42">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="66.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="66.5,0"
+                    Point2="70.5,0"
+                    Point3="70.5,4" />
+                  <mssgle:LineSegment
+                    End="70.5,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="70.5,38"
+                    Point2="70.5,42"
+                    Point3="74.5,42" />
+                  <mssgle:LineSegment
+                    End="133.5,42" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT into FINANCE table\FINANCE table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\INSERT into FINANCE table\STAGING table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

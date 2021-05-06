@@ -1,0 +1,668 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/5/2018 3:27:00 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{5B870B0B-6513-4B0F-B237-B0BDE1688806}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1100.123"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="order_location"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{16671C62-CDCA-427C-B850-022D31084FE5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Disable NC indexes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{081C1B9D-D623-48AB-AACB-D0BED910404C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Disable NC indexes"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DE3A53C-A772-492B-A882-E720BC31034C}"
+          SQLTask:SqlStatementSource="ALTER INDEX ixNC_disp_ord_id ON dbo.order_location DISABLE" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into Finance table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3F430CC5-C2D9-4350-AF54-50808D69CBE5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into Finance table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="7200"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into Finance table\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[order_location]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,ORDER([order_id] ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Finance table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{9DE3A53C-A772-492B-A882-E720BC31034C}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[FINANCE]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[billing_city]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="billing_city"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_city]"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_city]" />
+                    <inputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[billing_region]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="billing_region"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_region]"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_region]" />
+                    <inputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[billing_postcode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="billing_postcode"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_postcode]"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_postcode]" />
+                    <inputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[billing_country]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="billing_country"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_country]"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_country]" />
+                    <inputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_id]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="order_id"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      dataType="wstr"
+                      length="500"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_city]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing_city" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_region]"
+                      dataType="wstr"
+                      length="50"
+                      name="billing_region" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_postcode]"
+                      dataType="wstr"
+                      length="50"
+                      name="billing_postcode" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[billing_country]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing_country" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ordloc_id]"
+                      dataType="i4"
+                      name="ordloc_id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into Finance table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Finance table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Finance table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into Finance table\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+display_order_id AS order_id,
+LTRIM(RTRIM(billing_city)) AS billing_city,
+LTRIM(RTRIM(billing_region)) AS billing_region,
+LTRIM(RTRIM(billing_postcode)) AS billing_postcode,
+LTRIM(RTRIM(billing_country)) AS billing_country
+FROM staging.dbo.pbi_order_location_raw
+ORDER BY
+1</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into Finance table\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_city]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_city]"
+                      length="100"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_city]"
+                      name="billing_city"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_region]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_region]"
+                      length="50"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_region]"
+                      name="billing_region"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_postcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_postcode]"
+                      length="50"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_postcode]"
+                      name="billing_postcode"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_country]"
+                      length="100"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[billing_country]"
+                      name="billing_country"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      length="500"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]"
+                      name="order_id"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="IgnoreFailure" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_city]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing_city" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_region]"
+                      dataType="wstr"
+                      length="50"
+                      name="billing_region" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_postcode]"
+                      dataType="wstr"
+                      length="50"
+                      name="billing_postcode" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[billing_country]"
+                      dataType="wstr"
+                      length="100"
+                      name="billing_country" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      dataType="wstr"
+                      length="500"
+                      name="order_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      name="order_id" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_city]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_city]"
+                      name="billing_city" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_region]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_region]"
+                      name="billing_region" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_postcode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_postcode]"
+                      name="billing_postcode" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_country]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[billing_country]"
+                      name="billing_country" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into Finance table.Paths[OLE DB Source Output]"
+              endId="Package\Insert into Finance table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert into Finance table\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Rebuild NC indexes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EBB155F3-70A3-4A31-8555-CD27A183E063}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Rebuild NC indexes"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DE3A53C-A772-492B-A882-E720BC31034C}"
+          SQLTask:SqlStatementSource="ALTER INDEX ixNC_disp_ord_id ON dbo.order_location REBUILD" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Dest Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Clears existing data."
+      DTS:DTSID="{4BADBE63-FACF-42A2-8A73-E9F67E02A996}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Dest Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DE3A53C-A772-492B-A882-E720BC31034C}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE finance.dbo.order_location" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{29FCE48F-17B6-4B8D-8EE8-54EDBDCC7147}"
+      DTS:From="Package\Truncate Dest Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Disable NC indexes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{D6289731-D265-45D3-A7DD-C54EE247D57C}"
+      DTS:From="Package\Disable NC indexes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert into Finance table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{61465CD2-A13F-4BAC-B63B-C1EC9F2E9286}"
+      DTS:From="Package\Insert into Finance table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Rebuild NC indexes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="169.6,41.6"
+          Id="Package\Disable NC indexes"
+          TopLeft="252.666656626596,38.8266669752333" />
+        <NodeLayout
+          Size="188.8,41.6"
+          Id="Package\Insert into Finance table"
+          TopLeft="236.33333630032,111.640000132243" />
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Rebuild NC indexes"
+          TopLeft="489.99998052915,116.4800009257" />
+        <NodeLayout
+          Size="168,41.6"
+          Id="Package\Truncate Dest Table"
+          TopLeft="39.66666815016,35.3333330578274" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="207.66666815016,57.8800000165304">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44.9999884764358,0"
+              Start="0,0"
+              End="37.4999884764358,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="37.4999884764358,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="334.099996463458,80.4266669752333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31.2133331570092"
+              Start="0,0"
+              End="0,23.7133331570092">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.7133331570092" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="425.13333630032,134.860000528971">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.8666442288297,0"
+              Start="0,0"
+              End="57.3666442288297,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="57.3666442288297,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Insert into Finance table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Insert into Finance table\OLE DB Source"
+          TopLeft="93.9999998410542,68" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Insert into Finance table\OLE DB Destination"
+          TopLeft="368.999999682108,91.3066666611565" />
+        <EdgeLayout
+          Id="Package\Insert into Finance table.Paths[OLE DB Source Output]"
+          TopLeft="244.399999841054,88.8">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="124.599999841054,23.3066666611565"
+              Start="0,0"
+              End="117.099999841054,23.3066666611565">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="58.2999999205271,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="58.2999999205271,0"
+                    Point2="62.2999999205271,0"
+                    Point3="62.2999999205271,4" />
+                  <mssgle:LineSegment
+                    End="62.2999999205271,19.3066666611565" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62.2999999205271,19.3066666611565"
+                    Point2="62.2999999205271,23.3066666611565"
+                    Point3="66.2999999205271,23.3066666611565" />
+                  <mssgle:LineSegment
+                    End="117.099999841054,23.3066666611565" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into Finance table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into Finance table\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

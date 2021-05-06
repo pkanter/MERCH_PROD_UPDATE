@@ -1,0 +1,2009 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/14/2017 12:12:59 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NBNYC410547"
+  DTS:CreatorName="BAUBLEBAR\Paul.Kanterman"
+  DTS:DTSID="{9FA956E7-56E5-40AF-BCED-0F3F5703094E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.5000.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="order_items_summary"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{977DD8D6-E479-45C6-9B14-E250A817D9A2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Truncate merch_prod table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Clear out existing merch_prod data"
+      DTS:DTSID="{03A96F63-35F5-4B2A-818C-D5A77119F649}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate merch_prod table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE merch_prod.dbo.order_items_summary" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update merch_prod table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{57A37951-CD80-466D-8201-450563F18DB0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update merch_prod table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="34100"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Update merch_prod table\MERCH_PROD table destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="MERCH_PROD table destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[order_items_summary]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,ORDER([action_dt] ASC,[order_created_dt] ASC,[product_id] ASC,[parent_product_id] ASC,[is_sales_revenue] ASC,[is_ipr] ASC,[is_bonus_bauble] ASC,[is_buried_bauble] ASC,[item_initial_price] ASC)</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update merch_prod table\MERCH_PROD table destination.Connections[OleDbConnection]"
+                  connectionManagerID="{57B2F9CA-8367-416C-AD18-C5011CC6AC86}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MERCH_PROD_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[action_dt]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="action_dt"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[action_dt]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[action_dt]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[order_created_dt]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="order_created_dt"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[order_created_dt]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[order_created_dt]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[product_id]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="product_id"
+                      cachedSortKeyPosition="3"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[product_id]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[is_sales_revenue]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="is_sales_revenue"
+                      cachedSortKeyPosition="5"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_sales_revenue]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_sales_revenue]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[is_ipr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="is_ipr"
+                      cachedSortKeyPosition="6"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_ipr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_ipr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[is_bonus_bauble]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="is_bonus_bauble"
+                      cachedSortKeyPosition="7"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_bonus_bauble]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_bonus_bauble]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[item_initial_price]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="item_initial_price"
+                      cachedSortKeyPosition="9"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[item_initial_price]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[item_initial_price]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[ordu]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ordu"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ordu]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ordu]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[ord_base]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_base"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_base]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_base]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[ord_cpn]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_cpn"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_cpn]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_cpn]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[ord_rwd]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_rwd"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_rwd]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_rwd]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[ord_emp]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_emp"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_emp]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_emp]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[ord_dlr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ord_dlr"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_dlr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_dlr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[cxlu]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxlu"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxlu]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxlu]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[cxl_base]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxl_base"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_base]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_base]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[cxl_cpn]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxl_cpn"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_cpn]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_cpn]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[cxl_rwd]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxl_rwd"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_rwd]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_rwd]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[cxl_emp]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxl_emp"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_emp]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_emp]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[cxl_dlr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="cxl_dlr"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_dlr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_dlr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[dmdu]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="dmdu"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmdu]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmdu]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[dmd_base]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="dmd_base"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_base]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_base]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[dmd_cpn]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="dmd_cpn"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_cpn]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_cpn]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[dmd_rwd]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="dmd_rwd"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_rwd]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_rwd]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[dmd_emp]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="dmd_emp"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_emp]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_emp]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[dmd_dlr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="dmd_dlr"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_dlr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_dlr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[shpu]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="shpu"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shpu]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shpu]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[shp_base]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="shp_base"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_base]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_base]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[shp_cpn]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="shp_cpn"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_cpn]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_cpn]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[shp_rwd]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="shp_rwd"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_rwd]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_rwd]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[shp_emp]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="shp_emp"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_emp]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_emp]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[shp_dlr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="shp_dlr"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_dlr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_dlr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[rtnu]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtnu"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtnu]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtnu]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[rtn_base]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtn_base"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_base]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_base]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[rtn_cpn]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtn_cpn"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_cpn]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_cpn]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[rtn_rwd]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtn_rwd"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_rwd]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_rwd]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[rtn_emp]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtn_emp"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_emp]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_emp]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[rtn_dlr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="rtn_dlr"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_dlr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_dlr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[netu]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="netu"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[netu]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[netu]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[net_base]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="net_base"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_base]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_base]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[net_cpn]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="net_cpn"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_cpn]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_cpn]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[net_rwd]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="net_rwd"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_rwd]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_rwd]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[net_emp]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="net_emp"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_emp]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_emp]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[net_dlr]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="net_dlr"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_dlr]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_dlr]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[parent_product_id]"
+                      cachedDataType="i4"
+                      cachedName="parent_product_id"
+                      cachedSortKeyPosition="4"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[parent_product_id]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[parent_product_id]" />
+                    <inputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].Columns[is_buried_bauble]"
+                      cachedDataType="bool"
+                      cachedName="is_buried_bauble"
+                      cachedSortKeyPosition="8"
+                      externalMetadataColumnId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_buried_bauble]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_buried_bauble]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[action_dt]"
+                      dataType="dbDate"
+                      name="action_dt" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[order_created_dt]"
+                      dataType="dbDate"
+                      name="order_created_dt" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_sales_revenue]"
+                      dataType="bool"
+                      name="is_sales_revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_ipr]"
+                      dataType="bool"
+                      name="is_ipr" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_bonus_bauble]"
+                      dataType="bool"
+                      name="is_bonus_bauble" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[item_initial_price]"
+                      dataType="numeric"
+                      name="item_initial_price"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ordu]"
+                      dataType="i4"
+                      name="ordu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_base]"
+                      dataType="numeric"
+                      name="ord_base"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_cpn]"
+                      dataType="numeric"
+                      name="ord_cpn"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_rwd]"
+                      dataType="numeric"
+                      name="ord_rwd"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_emp]"
+                      dataType="numeric"
+                      name="ord_emp"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[ord_dlr]"
+                      dataType="numeric"
+                      name="ord_dlr"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxlu]"
+                      dataType="i4"
+                      name="cxlu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_base]"
+                      dataType="numeric"
+                      name="cxl_base"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_cpn]"
+                      dataType="numeric"
+                      name="cxl_cpn"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_rwd]"
+                      dataType="numeric"
+                      name="cxl_rwd"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_emp]"
+                      dataType="numeric"
+                      name="cxl_emp"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[cxl_dlr]"
+                      dataType="numeric"
+                      name="cxl_dlr"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmdu]"
+                      dataType="i4"
+                      name="dmdu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_base]"
+                      dataType="numeric"
+                      name="dmd_base"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_cpn]"
+                      dataType="numeric"
+                      name="dmd_cpn"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_rwd]"
+                      dataType="numeric"
+                      name="dmd_rwd"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_emp]"
+                      dataType="numeric"
+                      name="dmd_emp"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[dmd_dlr]"
+                      dataType="numeric"
+                      name="dmd_dlr"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shpu]"
+                      dataType="i4"
+                      name="shpu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_base]"
+                      dataType="numeric"
+                      name="shp_base"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_cpn]"
+                      dataType="numeric"
+                      name="shp_cpn"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_rwd]"
+                      dataType="numeric"
+                      name="shp_rwd"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_emp]"
+                      dataType="numeric"
+                      name="shp_emp"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[shp_dlr]"
+                      dataType="numeric"
+                      name="shp_dlr"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtnu]"
+                      dataType="i4"
+                      name="rtnu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_base]"
+                      dataType="numeric"
+                      name="rtn_base"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_cpn]"
+                      dataType="numeric"
+                      name="rtn_cpn"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_rwd]"
+                      dataType="numeric"
+                      name="rtn_rwd"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_emp]"
+                      dataType="numeric"
+                      name="rtn_emp"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[rtn_dlr]"
+                      dataType="numeric"
+                      name="rtn_dlr"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[netu]"
+                      dataType="i4"
+                      name="netu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_base]"
+                      dataType="numeric"
+                      name="net_base"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_cpn]"
+                      dataType="numeric"
+                      name="net_cpn"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_rwd]"
+                      dataType="numeric"
+                      name="net_rwd"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_emp]"
+                      dataType="numeric"
+                      name="net_emp"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[net_dlr]"
+                      dataType="numeric"
+                      name="net_dlr"
+                      precision="19"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[parent_product_id]"
+                      dataType="i4"
+                      name="parent_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input].ExternalColumns[is_buried_bauble]"
+                      dataType="bool"
+                      name="is_buried_bauble" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update merch_prod table\MERCH_PROD table destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\MERCH_PROD table destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\MERCH_PROD table destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\MERCH_PROD table destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update merch_prod table\STAGING table source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="STAGING table source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[order_items_summary_raw]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+CONVERT(DATE, action_dt,120) AS action_dt,
+CONVERT(DATE, order_created_dt,120) AS order_created_dt,
+CONVERT(INT, product_id) AS product_id,
+CONVERT(INT, parent_product_id) AS parent_product_id,
+CONVERT(BIT, is_sales_revenue) AS is_sales_revenue,
+CONVERT(BIT, is_ipr) AS is_ipr,
+CONVERT(BIT, is_bonus_bauble) AS is_bonus_bauble,
+CONVERT(BIT, is_buried_bauble) AS is_buried_bauble,
+CONVERT(NUMERIC(10,2), item_initial_price) AS item_initial_price,
+CONVERT(INT, ordu) AS ordu,
+CONVERT(NUMERIC(19,5), ord_base) AS ord_base,
+CONVERT(NUMERIC(19,5), ord_cpn) AS ord_cpn,
+CONVERT(NUMERIC(19,5), ord_rwd) AS ord_rwd,
+CONVERT(NUMERIC(19,5), ord_emp) AS ord_emp,
+CONVERT(NUMERIC(19,5), ord_dlr) AS ord_dlr,
+CONVERT(INT, cxlu) AS cxlu,
+CONVERT(NUMERIC(19,5), cxl_base) AS cxl_base,
+CONVERT(NUMERIC(19,5), cxl_cpn) AS cxl_cpn,
+CONVERT(NUMERIC(19,5), cxl_rwd) AS cxl_rwd,
+CONVERT(NUMERIC(19,5), cxl_emp) AS cxl_emp,
+CONVERT(NUMERIC(19,5), cxl_dlr) AS cxl_dlr,
+CONVERT(INT, dmdu) AS dmdu,
+CONVERT(NUMERIC(19,5), dmd_base) AS dmd_base,
+CONVERT(NUMERIC(19,5), dmd_cpn) AS dmd_cpn,
+CONVERT(NUMERIC(19,5), dmd_rwd) AS dmd_rwd,
+CONVERT(NUMERIC(19,5), dmd_emp) AS dmd_emp,
+CONVERT(NUMERIC(19,5), dmd_dlr) AS dmd_dlr,
+CONVERT(INT, shpu) AS shpu,
+CONVERT(NUMERIC(19,5), shp_base) AS shp_base,
+CONVERT(NUMERIC(19,5), shp_cpn) AS shp_cpn,
+CONVERT(NUMERIC(19,5), shp_rwd) AS shp_rwd,
+CONVERT(NUMERIC(19,5), shp_emp) AS shp_emp,
+CONVERT(NUMERIC(19,5), shp_dlr) AS shp_dlr,
+CONVERT(INT, rtnu) AS rtnu,
+CONVERT(NUMERIC(19,5), rtn_base) AS rtn_base,
+CONVERT(NUMERIC(19,5), rtn_cpn) AS rtn_cpn,
+CONVERT(NUMERIC(19,5), rtn_rwd) AS rtn_rwd,
+CONVERT(NUMERIC(19,5), rtn_emp) AS rtn_emp,
+CONVERT(NUMERIC(19,5), rtn_dlr) AS rtn_dlr,
+CONVERT(INT, netu) AS netu,
+CONVERT(NUMERIC(19,5), net_base) AS net_base,
+CONVERT(NUMERIC(19,5), net_cpn) AS net_cpn,
+CONVERT(NUMERIC(19,5), net_rwd) AS net_rwd,
+CONVERT(NUMERIC(19,5), net_emp) AS net_emp,
+CONVERT(NUMERIC(19,5), net_dlr) AS net_dlr
+FROM staging.dbo.order_items_summary_raw
+ORDER BY 
+CONVERT(DATE, action_dt,120),
+CONVERT(DATE, order_created_dt,120),
+CONVERT(INT, product_id),
+CONVERT(INT, parent_product_id),
+CONVERT(BIT, is_sales_revenue),
+CONVERT(BIT, is_ipr),
+CONVERT(BIT, is_bonus_bauble),
+CONVERT(BIT, is_buried_bauble),
+CONVERT(NUMERIC(10,2), item_initial_price)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update merch_prod table\STAGING table source.Connections[OleDbConnection]"
+                  connectionManagerID="{5154E80B-AC2A-48F2-8753-3FB60C61299D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[STAGING_PRJ]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[action_dt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[action_dt]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[action_dt]"
+                      name="action_dt"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[order_created_dt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[order_created_dt]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[order_created_dt]"
+                      name="order_created_dt"
+                      sortKeyPosition="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[product_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[product_id]"
+                      name="product_id"
+                      sortKeyPosition="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_sales_revenue]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_sales_revenue]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_sales_revenue]"
+                      name="is_sales_revenue"
+                      sortKeyPosition="5"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_ipr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_ipr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_ipr]"
+                      name="is_ipr"
+                      sortKeyPosition="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_bonus_bauble]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_bonus_bauble]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_bonus_bauble]"
+                      name="is_bonus_bauble"
+                      sortKeyPosition="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[item_initial_price]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[item_initial_price]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[item_initial_price]"
+                      name="item_initial_price"
+                      sortKeyPosition="9"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ordu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ordu]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ordu]"
+                      name="ordu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_base]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_base]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_base]"
+                      name="ord_base"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_cpn]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_cpn]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_cpn]"
+                      name="ord_cpn"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_rwd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_rwd]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_rwd]"
+                      name="ord_rwd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_emp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_emp]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_emp]"
+                      name="ord_emp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_dlr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_dlr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[ord_dlr]"
+                      name="ord_dlr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxlu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxlu]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxlu]"
+                      name="cxlu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_base]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_base]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_base]"
+                      name="cxl_base"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_cpn]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_cpn]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_cpn]"
+                      name="cxl_cpn"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_rwd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_rwd]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_rwd]"
+                      name="cxl_rwd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_emp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_emp]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_emp]"
+                      name="cxl_emp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_dlr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_dlr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[cxl_dlr]"
+                      name="cxl_dlr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmdu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmdu]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmdu]"
+                      name="dmdu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_base]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_base]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_base]"
+                      name="dmd_base"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_cpn]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_cpn]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_cpn]"
+                      name="dmd_cpn"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_rwd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_rwd]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_rwd]"
+                      name="dmd_rwd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_emp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_emp]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_emp]"
+                      name="dmd_emp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_dlr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_dlr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[dmd_dlr]"
+                      name="dmd_dlr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shpu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shpu]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shpu]"
+                      name="shpu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_base]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_base]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_base]"
+                      name="shp_base"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_cpn]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_cpn]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_cpn]"
+                      name="shp_cpn"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_rwd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_rwd]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_rwd]"
+                      name="shp_rwd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_emp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_emp]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_emp]"
+                      name="shp_emp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_dlr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_dlr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[shp_dlr]"
+                      name="shp_dlr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtnu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtnu]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtnu]"
+                      name="rtnu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_base]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_base]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_base]"
+                      name="rtn_base"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_cpn]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_cpn]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_cpn]"
+                      name="rtn_cpn"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_rwd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_rwd]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_rwd]"
+                      name="rtn_rwd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_emp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_emp]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_emp]"
+                      name="rtn_emp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_dlr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_dlr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[rtn_dlr]"
+                      name="rtn_dlr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[netu]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[netu]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[netu]"
+                      name="netu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_base]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_base]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_base]"
+                      name="net_base"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_cpn]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_cpn]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_cpn]"
+                      name="net_cpn"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_rwd]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_rwd]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_rwd]"
+                      name="net_rwd"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_emp]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_emp]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_emp]"
+                      name="net_emp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_dlr]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_dlr]"
+                      length="50"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[net_dlr]"
+                      name="net_dlr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[parent_product_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[parent_product_id]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[parent_product_id]"
+                      name="parent_product_id"
+                      sortKeyPosition="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_buried_bauble]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_buried_bauble]"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].Columns[is_buried_bauble]"
+                      name="is_buried_bauble"
+                      sortKeyPosition="8"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[action_dt]"
+                      dataType="dbDate"
+                      name="action_dt" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[order_created_dt]"
+                      dataType="dbDate"
+                      name="order_created_dt" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[product_id]"
+                      dataType="i4"
+                      name="product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_sales_revenue]"
+                      dataType="bool"
+                      name="is_sales_revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_ipr]"
+                      dataType="bool"
+                      name="is_ipr" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_bonus_bauble]"
+                      dataType="bool"
+                      name="is_bonus_bauble" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[item_initial_price]"
+                      dataType="numeric"
+                      name="item_initial_price"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ordu]"
+                      dataType="i4"
+                      name="ordu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_base]"
+                      dataType="numeric"
+                      name="ord_base"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_cpn]"
+                      dataType="numeric"
+                      name="ord_cpn"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_rwd]"
+                      dataType="numeric"
+                      name="ord_rwd"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_emp]"
+                      dataType="numeric"
+                      name="ord_emp"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[ord_dlr]"
+                      dataType="numeric"
+                      name="ord_dlr"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxlu]"
+                      dataType="i4"
+                      name="cxlu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_base]"
+                      dataType="numeric"
+                      name="cxl_base"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_cpn]"
+                      dataType="numeric"
+                      name="cxl_cpn"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_rwd]"
+                      dataType="numeric"
+                      name="cxl_rwd"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_emp]"
+                      dataType="numeric"
+                      name="cxl_emp"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[cxl_dlr]"
+                      dataType="numeric"
+                      name="cxl_dlr"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmdu]"
+                      dataType="i4"
+                      name="dmdu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_base]"
+                      dataType="numeric"
+                      name="dmd_base"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_cpn]"
+                      dataType="numeric"
+                      name="dmd_cpn"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_rwd]"
+                      dataType="numeric"
+                      name="dmd_rwd"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_emp]"
+                      dataType="numeric"
+                      name="dmd_emp"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[dmd_dlr]"
+                      dataType="numeric"
+                      name="dmd_dlr"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shpu]"
+                      dataType="i4"
+                      name="shpu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_base]"
+                      dataType="numeric"
+                      name="shp_base"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_cpn]"
+                      dataType="numeric"
+                      name="shp_cpn"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_rwd]"
+                      dataType="numeric"
+                      name="shp_rwd"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_emp]"
+                      dataType="numeric"
+                      name="shp_emp"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[shp_dlr]"
+                      dataType="numeric"
+                      name="shp_dlr"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtnu]"
+                      dataType="i4"
+                      name="rtnu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_base]"
+                      dataType="numeric"
+                      name="rtn_base"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_cpn]"
+                      dataType="numeric"
+                      name="rtn_cpn"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_rwd]"
+                      dataType="numeric"
+                      name="rtn_rwd"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_emp]"
+                      dataType="numeric"
+                      name="rtn_emp"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[rtn_dlr]"
+                      dataType="numeric"
+                      name="rtn_dlr"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[netu]"
+                      dataType="i4"
+                      name="netu" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_base]"
+                      dataType="numeric"
+                      name="net_base"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_cpn]"
+                      dataType="numeric"
+                      name="net_cpn"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_rwd]"
+                      dataType="numeric"
+                      name="net_rwd"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_emp]"
+                      dataType="numeric"
+                      name="net_emp"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[net_dlr]"
+                      dataType="numeric"
+                      name="net_dlr"
+                      precision="19"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[parent_product_id]"
+                      dataType="i4"
+                      name="parent_product_id" />
+                    <externalMetadataColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output].ExternalColumns[is_buried_bauble]"
+                      dataType="bool"
+                      name="is_buried_bauble" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[action_dt]"
+                      dataType="dbDate"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[action_dt]"
+                      name="action_dt" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[order_created_dt]"
+                      dataType="dbDate"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[order_created_dt]"
+                      name="order_created_dt" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[product_id]"
+                      name="product_id" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[parent_product_id]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[parent_product_id]"
+                      name="parent_product_id" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_sales_revenue]"
+                      dataType="bool"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_sales_revenue]"
+                      name="is_sales_revenue" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_ipr]"
+                      dataType="bool"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_ipr]"
+                      name="is_ipr" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_bonus_bauble]"
+                      dataType="bool"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_bonus_bauble]"
+                      name="is_bonus_bauble" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_buried_bauble]"
+                      dataType="bool"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[is_buried_bauble]"
+                      name="is_buried_bauble" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[item_initial_price]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[item_initial_price]"
+                      name="item_initial_price"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ordu]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ordu]"
+                      name="ordu" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_base]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_base]"
+                      name="ord_base"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_cpn]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_cpn]"
+                      name="ord_cpn"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_rwd]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_rwd]"
+                      name="ord_rwd"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_emp]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_emp]"
+                      name="ord_emp"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_dlr]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ord_dlr]"
+                      name="ord_dlr"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxlu]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxlu]"
+                      name="cxlu" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_base]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_base]"
+                      name="cxl_base"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_cpn]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_cpn]"
+                      name="cxl_cpn"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_rwd]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_rwd]"
+                      name="cxl_rwd"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_emp]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_emp]"
+                      name="cxl_emp"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_dlr]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[cxl_dlr]"
+                      name="cxl_dlr"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmdu]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmdu]"
+                      name="dmdu" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_base]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_base]"
+                      name="dmd_base"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_cpn]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_cpn]"
+                      name="dmd_cpn"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_rwd]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_rwd]"
+                      name="dmd_rwd"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_emp]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_emp]"
+                      name="dmd_emp"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_dlr]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[dmd_dlr]"
+                      name="dmd_dlr"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shpu]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shpu]"
+                      name="shpu" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_base]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_base]"
+                      name="shp_base"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_cpn]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_cpn]"
+                      name="shp_cpn"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_rwd]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_rwd]"
+                      name="shp_rwd"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_emp]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_emp]"
+                      name="shp_emp"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_dlr]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[shp_dlr]"
+                      name="shp_dlr"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtnu]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtnu]"
+                      name="rtnu" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_base]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_base]"
+                      name="rtn_base"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_cpn]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_cpn]"
+                      name="rtn_cpn"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_rwd]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_rwd]"
+                      name="rtn_rwd"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_emp]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_emp]"
+                      name="rtn_emp"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_dlr]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[rtn_dlr]"
+                      name="rtn_dlr"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[netu]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[netu]"
+                      name="netu" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_base]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_base]"
+                      name="net_base"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_cpn]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_cpn]"
+                      name="net_cpn"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_rwd]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_rwd]"
+                      name="net_rwd"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_emp]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_emp]"
+                      name="net_emp"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_dlr]"
+                      dataType="numeric"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[net_dlr]"
+                      name="net_dlr"
+                      precision="19"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update merch_prod table.Paths[OLE DB Source Output]"
+              endId="Package\Update merch_prod table\MERCH_PROD table destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Update merch_prod table\STAGING table source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{9042A780-E509-44C0-8931-3E3690F15795}"
+      DTS:From="Package\Truncate merch_prod table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Update merch_prod table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="206.4,41.6"
+          Id="Package\Truncate merch_prod table"
+          TopLeft="58.2857152783141,36.7058828677273" />
+        <NodeLayout
+          Size="198.4,41.6"
+          Id="Package\Update merch_prod table"
+          TopLeft="293.14286213505,74.6352951643789" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="264.685715278314,57.5058828677273">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.4571468567359,37.9294122966516"
+              Start="0,0"
+              End="20.9571468567359,37.9294122966516">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="10.228573428368,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.228573428368,0"
+                    Point2="14.228573428368,0"
+                    Point3="14.228573428368,4" />
+                  <mssgle:LineSegment
+                    End="14.228573428368,33.9294122966516" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.228573428368,33.9294122966516"
+                    Point2="14.228573428368,37.9294122966516"
+                    Point3="18.228573428368,37.9294122966516" />
+                  <mssgle:LineSegment
+                    End="20.9571468567359,37.9294122966516" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update merch_prod table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="184,41.6"
+          Id="Package\Update merch_prod table\STAGING table source"
+          TopLeft="45.3333333333333,22.8" />
+        <NodeLayout
+          Size="227.2,41.6"
+          Id="Package\Update merch_prod table\MERCH_PROD table destination"
+          TopLeft="132.076190495653,103.631372523281" />
+        <EdgeLayout
+          Id="Package\Update merch_prod table.Paths[OLE DB Source Output]"
+          TopLeft="137.333333333333,64.4">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="108.34285716232,39.231372523281"
+              Start="0,0"
+              End="108.34285716232,31.731372523281">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.6156862616405" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.6156862616405"
+                    Point2="0,19.6156862616405"
+                    Point3="4,19.6156862616405" />
+                  <mssgle:LineSegment
+                    End="104.34285716232,19.6156862616405" />
+                  <mssgle:CubicBezierSegment
+                    Point1="104.34285716232,19.6156862616405"
+                    Point2="108.34285716232,19.6156862616405"
+                    Point3="108.34285716232,23.6156862616405" />
+                  <mssgle:LineSegment
+                    End="108.34285716232,31.731372523281" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update merch_prod table\MERCH_PROD table destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update merch_prod table\STAGING table source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
